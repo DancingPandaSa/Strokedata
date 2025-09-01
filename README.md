@@ -107,28 +107,28 @@ streamlit run dashboards/streamlit_app.py
 
 ## ✅ Key Features
 
-### 🧼 Data Cleaning with Pandas (e.g., missing BMI values, gender filtering)
+- 🧼 **Data Cleaning** with Pandas  
+  Handle missing values, outlier filtering, gender normalization, and feature encoding (e.g., BMI median fill, gender uppercase trimming).
 
-### 🏗 DBT Data Models:
+- 🏗 **DBT Data Models**
+  - `stg_stroke_data` – Raw data staging layer
+  - `int_patient_risk` – Transformed intermediate layer
+  - `mart_stroke_summary` – Final reporting-ready dataset
 
-stg_stroke_data
+- 🧪 **Data Validation**  
+  Custom Python checks for:
+  - Null values
+  - Data types
+  - Business rules (e.g., valid age range, bmi > 0, etc.)
 
-int_patient_risk
+- 📊 **Interactive Dashboards**  
+  Visualize key trends and KPIs using:
+  - Streamlit
+  - Power BI (optional)
 
-mart_stroke_summary
+- 🔁 **CI/CD with GitHub Actions**  
+  Automate data quality checks and ETL validation on every push or pull request.
 
-- **🧪 Data Validation (null checks, type checks, rule-based QA)**
+- 🔒 **Version Control**  
+  Project managed with Git, following modular, reusable, and production-ready folder structure.
 
-- **📊 Interactive Dashboards (Streamlit or Power BI)**
-
-- **🔁 CI/CD with GitHub Actions (auto-run ETL on push)**
-
-- **🔒 Version Control using Git**
-
-## 🧠 Insights
-
-- **🔺 Age and hypertension are the strongest indicators for stroke**
-
-- **🚬 Smokers with heart disease show higher average stroke probability**
-
-- **🧮 BMI and glucose levels moderately influence stroke risk**

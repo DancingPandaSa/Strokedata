@@ -86,22 +86,27 @@ git clone https://github.com/yourusername/stroke-prediction-pipeline.git
 cd stroke-prediction-pipeline
 ```
 ### 2. Install Python Dependencies
+
+Install all required Python libraries using the `requirements.txt` file:
+
+```bash
 pip install -r requirements.txt
 
+```
 ### 3. Load Data into MySQL
 
 Update MySQL credentials in etl/load_data.py, then run:
-
+```bash
 python etl/load_data.py
-
+```
 ### 4. Run DBT Models
 
 Navigate to the DBT project directory and execute:
-
+```bash
 cd dbt/stroke_project
 dbt run
 dbt test
-
+```
 ### 5. Start Streamlit Dashboard (Optional)
 streamlit run dashboards/streamlit_app.py
 

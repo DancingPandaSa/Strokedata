@@ -31,7 +31,7 @@ ETL (Python / Pandas / SQL)
         ↓
 版本控管 + 自動化 (Git + GitHub Actions)
 
-
+```
 
 ---
 
@@ -76,4 +76,4 @@ stroke-prediction-pipeline/
 │
 ├── requirements.txt                # Python dependencies
 └── README.md                       # Project documentation
-
+```

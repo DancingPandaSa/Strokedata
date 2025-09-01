@@ -117,18 +117,18 @@ int_patient_risk
 
 mart_stroke_summary
 
-### 🧪 Data Validation (null checks, type checks, rule-based QA)
+- **🧪 Data Validation (null checks, type checks, rule-based QA)**
 
-### 📊 Interactive Dashboards (Streamlit or Power BI)
+- **📊 Interactive Dashboards (Streamlit or Power BI)**
 
-### 🔁 CI/CD with GitHub Actions (auto-run ETL on push)
+- **🔁 CI/CD with GitHub Actions (auto-run ETL on push)**
 
-### 🔒 Version Control using Git
+- **🔒 Version Control using Git**
 
 ## 🧠 Insights
 
-### 🔺 Age and hypertension are the strongest indicators for stroke
+- **🔺 Age and hypertension are the strongest indicators for stroke**
 
-### 🚬 Smokers with heart disease show higher average stroke probability
+- **🚬 Smokers with heart disease show higher average stroke probability**
 
-### 🧮 BMI and glucose levels moderately influence stroke risk
+- **🧮 BMI and glucose levels moderately influence stroke risk**

@@ -15,6 +15,8 @@ This project demonstrates an **end-to-end data pipeline** that includes data ing
 ---
 
 ## 🧭 System Architecture
+
+```text
 資料來源 (Kaggle Dataset)
         ↓
 ETL (Python / Pandas / SQL)
@@ -28,6 +30,7 @@ ETL (Python / Pandas / SQL)
 可視化 (Power BI / Tableau / Streamlit)
         ↓
 版本控管 + 自動化 (Git + GitHub Actions)
+
 
 
 ---
@@ -47,28 +50,30 @@ ETL (Python / Pandas / SQL)
 ---
 
 ## 📁 Project Structure
+
+```text
 stroke-prediction-pipeline/
 │
-├── data/                         # Raw and cleaned CSV files
+├── data/                            # Raw and cleaned datasets
 │   └── healthcare-dataset-stroke-data.csv
 │
-├── etl/
-│   └── load_data.py             # ETL script to clean & load into MySQL
+├── etl/                             # ETL pipeline scripts
+│   └── load_data.py                 # Cleans and loads data into MySQL
 │
-├── dbt/
-│   └── dbt_project/             # DBT project with staging, intermediate, mart models
+├── dbt/                             # DBT project folder
+│   └── stroke_project/              # Contains DBT models (staging, mart, etc.)
 │
-├── quality_checks/
-│   └── validate_data.py         # Python scripts for data quality validation
+├── quality_checks/                 # Data validation scripts
+│   └── validate_data.py            # Rule-based quality checks and logging
 │
-├── dashboards/
-│   ├── streamlit_app.py         # Optional Streamlit app
-│   └── powerbi_dashboard.pbix   # Or Tableau workbook
+├── dashboards/                      # Visualization layer
+│   ├── streamlit_app.py            # Streamlit dashboard app (optional)
+│   └── powerbi_dashboard.pbix      # Power BI dashboard file (optional)
 │
-├── .github/
+├── .github/                         # GitHub Actions CI/CD config
 │   └── workflows/
-│       └── etl_ci.yml           # GitHub Actions for automation
+│       └── etl_ci.yml              # Workflow for automated ETL validation
 │
-├── README.md
-└── requirements.txt
+├── requirements.txt                # Python dependencies
+└── README.md                       # Project documentation
 

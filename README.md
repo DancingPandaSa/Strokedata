@@ -15,6 +15,19 @@ This project demonstrates an **end-to-end data pipeline** that includes data ing
 ---
 
 ## 🧭 System Architecture
+資料來源 (Kaggle Dataset)
+        ↓
+ETL (Python / Pandas / SQL)
+        ↓
+資料倉儲 (MySQL)
+        ↓
+數據建模 (DBT: staging / intermediate / mart)
+        ↓
+資料品質監控 (Python rule checks + logs)
+        ↓
+可視化 (Power BI / Tableau / Streamlit)
+        ↓
+版本控管 + 自動化 (Git + GitHub Actions)
 
 
 ---
@@ -34,4 +47,28 @@ This project demonstrates an **end-to-end data pipeline** that includes data ing
 ---
 
 ## 📁 Project Structure
+stroke-prediction-pipeline/
+│
+├── data/                         # Raw and cleaned CSV files
+│   └── healthcare-dataset-stroke-data.csv
+│
+├── etl/
+│   └── load_data.py             # ETL script to clean & load into MySQL
+│
+├── dbt/
+│   └── dbt_project/             # DBT project with staging, intermediate, mart models
+│
+├── quality_checks/
+│   └── validate_data.py         # Python scripts for data quality validation
+│
+├── dashboards/
+│   ├── streamlit_app.py         # Optional Streamlit app
+│   └── powerbi_dashboard.pbix   # Or Tableau workbook
+│
+├── .github/
+│   └── workflows/
+│       └── etl_ci.yml           # GitHub Actions for automation
+│
+├── README.md
+└── requirements.txt
 

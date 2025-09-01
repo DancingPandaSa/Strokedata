@@ -44,7 +44,7 @@ ETL (Python / Pandas / SQL)
 | Data Warehouse          | MySQL                     |
 | Data Modeling           | DBT                       |
 | Data Quality Monitoring | Python (custom rules)     |
-| Visualization           | Streamlit / Power BI      |
+| Visualization           | Power BI      |
 | CI/CD & Version Control | Git + GitHub Actions      |
 
 ---

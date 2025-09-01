@@ -128,7 +128,6 @@ streamlit run dashboards/streamlit_app.py
 
 - 📊 **Interactive Dashboards**  
   Visualize key trends and KPIs using:
-  - Streamlit
   - Power BI (optional)
 
 - 🔁 **CI/CD with GitHub Actions**  

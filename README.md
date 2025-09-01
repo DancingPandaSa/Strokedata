@@ -84,7 +84,8 @@ stroke-prediction-pipeline/
 ```bash
 git clone https://github.com/yourusername/stroke-prediction-pipeline.git
 cd stroke-prediction-pipeline
-2. Install Python Dependencies
+```
+### 2. Install Python Dependencies
 pip install -r requirements.txt
 
 ### 3. Load Data into MySQL
@@ -106,9 +107,9 @@ streamlit run dashboards/streamlit_app.py
 
 ## ✅ Key Features
 
-🧼 Data Cleaning with Pandas (e.g., missing BMI values, gender filtering)
+### 🧼 Data Cleaning with Pandas (e.g., missing BMI values, gender filtering)
 
-🏗 DBT Data Models:
+### 🏗 DBT Data Models:
 
 stg_stroke_data
 
@@ -116,18 +117,18 @@ int_patient_risk
 
 mart_stroke_summary
 
-🧪 Data Validation (null checks, type checks, rule-based QA)
+### 🧪 Data Validation (null checks, type checks, rule-based QA)
 
-📊 Interactive Dashboards (Streamlit or Power BI)
+### 📊 Interactive Dashboards (Streamlit or Power BI)
 
-🔁 CI/CD with GitHub Actions (auto-run ETL on push)
+### 🔁 CI/CD with GitHub Actions (auto-run ETL on push)
 
-🔒 Version Control using Git
+### 🔒 Version Control using Git
 
-## 🧠 Sample Insights
+## 🧠 Insights
 
-🔺 Age and hypertension are the strongest indicators for stroke
+### 🔺 Age and hypertension are the strongest indicators for stroke
 
-🚬 Smokers with heart disease show higher average stroke probability
+### 🚬 Smokers with heart disease show higher average stroke probability
 
-🧮 BMI and glucose levels moderately influence stroke risk
+### 🧮 BMI and glucose levels moderately influence stroke risk

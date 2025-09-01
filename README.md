@@ -27,7 +27,7 @@ ETL (Python / Pandas / SQL)
         ↓
 資料品質監控 (Python rule checks + logs)
         ↓
-可視化 (Power BI / Tableau / Streamlit)
+可視化 (Power BI)
         ↓
 版本控管 + 自動化 (Git + GitHub Actions)
 

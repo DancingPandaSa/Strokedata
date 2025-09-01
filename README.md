@@ -77,3 +77,57 @@ stroke-prediction-pipeline/
 ├── requirements.txt                # Python dependencies
 └── README.md                       # Project documentation
 ```
+## ⚙️ Setup Instructions
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/yourusername/stroke-prediction-pipeline.git
+cd stroke-prediction-pipeline
+2. Install Python Dependencies
+pip install -r requirements.txt
+
+### 3. Load Data into MySQL
+
+Update MySQL credentials in etl/load_data.py, then run:
+
+python etl/load_data.py
+
+### 4. Run DBT Models
+
+Navigate to the DBT project directory and execute:
+
+cd dbt/stroke_project
+dbt run
+dbt test
+
+### 5. Start Streamlit Dashboard (Optional)
+streamlit run dashboards/streamlit_app.py
+
+## ✅ Key Features
+
+🧼 Data Cleaning with Pandas (e.g., missing BMI values, gender filtering)
+
+🏗 DBT Data Models:
+
+stg_stroke_data
+
+int_patient_risk
+
+mart_stroke_summary
+
+🧪 Data Validation (null checks, type checks, rule-based QA)
+
+📊 Interactive Dashboards (Streamlit or Power BI)
+
+🔁 CI/CD with GitHub Actions (auto-run ETL on push)
+
+🔒 Version Control using Git
+
+## 🧠 Sample Insights
+
+🔺 Age and hypertension are the strongest indicators for stroke
+
+🚬 Smokers with heart disease show higher average stroke probability
+
+🧮 BMI and glucose levels moderately influence stroke risk

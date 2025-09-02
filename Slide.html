@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中風預測數據分析簡報</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f2f5;
+        }
+       .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            box-sizing: border-box;
+            color: #333;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+       .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+       .content {
+            background: #fff;
+            padding: 60px 80px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            width: 100%;
+            height: 90%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 0.5em;
+        }
+        h2 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.3em;
+            margin-top: 0.5em;
+        }
+        h3 {
+            font-size: 1.8em;
+            margin-top: 1.5em;
+            text-align: left;
+        }
+        h4 {
+            font-size: 1.4em;
+            margin-top: 1em;
+            text-align: left;
+        }
+        p, ul, ol, table {
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-align: left;
+            margin: 0.5em 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        ul li, ol li {
+            margin-bottom: 0.5em;
+        }
+        code, pre {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #34495e;
+            color: #fff;
+            font-weight: bold;
+        }
+       .mermaid {
+            margin: 20px auto;
+            max-width: 100%;
+        }
+       .navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+       .nav-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 20px 25px;
+            font-size: 2em;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s;
+        }
+       .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: true });
+        });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % totalSlides);
+        }
+
+        function prevSlide() {
+            showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        window.onload = () => {
+            showSlide(0);
+        };
+    </script>
+</head>
+<body>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="prevSlide()">&#10094;</button>
+        <button class="nav-btn" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <div class="slide active">
+        <div class="content" style="text-align: center;">
+            <h1>腦中風預測資料工程與分析報告</h1>
+            <p style="font-size: 1.5em; color: #7f8c8d;">一個基於現代資料堆棧的端到端藍圖</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>專案概述</h2>
+            <p>本報告旨在為 Kaggle 腦中風預測資料集構建一套完整的資料管線與分析藍圖 [1, 2]。專案的最終目標是將原始醫療數據轉化為可行的洞察，並為未來的機器學習模型提供乾淨、可靠的資料基礎，從而協助醫療專業人員進行預防性護理。</p>
+            <p>此藍圖採用<strong>現代資料堆棧（Modern Data Stack）</strong>理念，遵循**提取-加載-轉化（ELT）**架構模式，與傳統 ETL 有所不同。所有轉化邏輯都在資料倉儲內部進行，實現更高的靈活性與可擴展性 [3, 4]。</p>
+            <p>分析揭示了與腦中風風險高度相關的核心洞察，例如年齡、高血壓和高血糖水平是主要風險因素 [2, 5]。本專案透過自動化品質檢查與版本控制，確保資料的完整性與可信賴性，這在醫療保健領域尤為重要 [6, 7]。</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>專案目標</h2>
+            <ul>
+                <li><strong>構建可擴展的資料管線</strong>：建立一個可重複、可擴展且自動化的 ELT 管線，將原始資料轉換為乾淨、結構化的資料集，並載入至資料倉儲中 [3, 8]。</li>
+                <li><strong>實現資料建模與治理</strong>：運用 <code>dbt</code> (data build tool) 實現分層資料建模（staging, intermediate, mart），並透過內建測試確保資料品質與一致性 [9, 10]。</li>
+                <li><strong>提供可行的分析洞察</strong>：透過視覺化工具（Power BI / Tableau）揭示與腦中風風險相關的關鍵因素，並為醫療專業人員提供可行的預防性護理洞察 [5, 11, 12]。</li>
+                <li><strong>建立自動化工作流</strong>：使用 Git 與 GitHub Actions 建立一個強固的 CI/CD (持續整合/持續部署) 管線，確保每次程式碼變更都能經過自動化測試與部署 [13]。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>1. 系統架構與資料流總覽</h2>
+            <div class="mermaid">
+                graph TD
+                    A --> B(ETL: Python / Pandas);
+                    B --> C(資料倉儲: MySQL);
+                    C --> D(資料建模: dbt);
+                    D --> E(資料品質監控: Python);
+                    D --> F(可視化: Power BI / Tableau / Streamlit);
+                    E --> F;
+                    A --> G(版本控制 + 自動化: Git + GitHub Actions);
+                    B --> G;
+                    C --> G;
+                    D --> G;
+                    E --> G;
+                    F --> G;
+                    G --> H(自動化);
+                
+                    subgraph ETL
+                        B
+                    end
+                
+                    subgraph Data Warehouse [資料倉儲]
+                        C
+                    end
+                
+                    subgraph Data Modeling [資料建模]
+                        D
+                    end
+                
+                    subgraph Quality Control [資料品質監控]
+                        E
+                    end
+                
+                    subgraph Visualization [可視化]
+                        F
+                    end
+                
+                    subgraph Automation & Version Control [自動化與版本控制]
+                        G
+                        H
+                    end
+            </div>
+            <p>此架構是一個典型的現代 ELT（提取-加載-轉化）管線，將資料的清洗與轉化放在資料加載到倉儲之後，提供更為靈活且可審計的資料處理流程 [3, 4]。</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>2. 資料獲取、清洗與預處理 (ETL)</h2>
+            <h3>2.1 原始資料概況分析</h3>
+            <p>Kaggle 資料集包含 5,110 筆病患數據，其中存在以下關鍵品質問題 [2, 14, 15]：</p>
+            <ul>
+                <li><strong>缺失值</strong>：<code>bmi</code> 欄位存在 201 個缺失值 [14, 16]。</li>
+                <li><strong>數據異常</strong>：<code>gender</code> 欄位有一個單一的異常值「Other」 [2]。</li>
+                <li><strong>類別不平衡</strong>：目標變數 <code>stroke</code> 存在嚴重不平衡，中風與非中風比例約為 1:20 [2, 17]。</li>
+                <li><strong>無意義特徵</strong>：<code>id</code> 欄位對預測模型無用，應移除 [2, 12]。</li>
+            </ul>
+            <h4>表1：初始資料集概況與品質問題</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>特徵</th>
+                        <th>缺失值</th>
+                        <th>備註</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>id</code></td>
+                        <td>0</td>
+                        <td>唯一識別碼，對模型無用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>gender</code></td>
+                        <td>0</td>
+                        <td>包含不顯著的 "Other" 類別。</td>
+                    </tr>
+                    <tr>
+                        <td><code>bmi</code></td>
+                        <td><strong>201</strong></td>
+                        <td>存在缺失值。</td>
+                    </tr>
+                    <tr>
+                        <td><code>stroke</code></td>
+                        <td>0</td>
+                        <td>存在嚴重的類別不平衡（約1:20）。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h3>2.2 資料品質與預處理策略</h3>
+            <p>我們將使用 Python 和 Pandas 針對上述問題實施強固的預處理策略 [8, 18]：</p>
+            <h4>表2：資料清洗與轉化規則</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>問題</th>
+                        <th>建議解決方案</th>
+                        <th>理由</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>缺失的 <code>bmi</code></td>
+                        <td>採用線性插值或迴歸插補</td>
+                        <td>避免扭曲資料分布，提高模型準確性。</td>
+                    </tr>
+                    <tr>
+                        <td><code>gender</code> 異常值</td>
+                        <td>移除包含 "Other" 的記錄</td>
+                        <td>該記錄統計上不顯著，可能造成編碼問題。</td>
+                    </tr>
+                    <tr>
+                        <td>非數值特徵</td>
+                        <td>使用單熱編碼 (OneHotEncoder)</td>
+                        <td>確保機器學習模型能正確處理。</td>
+                    </tr>
+                    <tr>
+                        <td>類別不平衡</td>
+                        <td>在建模階段採用過採樣/欠採樣</td>
+                        <td>解決高準確率但低預測能力的誤導性問題。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>3. 資料倉儲與 dbt 進階資料建模</h2>
+            <p>本專案使用 MySQL 作為資料倉儲 [3]，並利用 <code>dbt</code> 框架進行分層資料建模 [9, 19]。這種方法將資料轉化視為軟體開發，允許版本控制與測試 [20, 21]。</p>
+            <ul>
+                <li><strong>Staging（暫存）層</strong>：直接建立在原始資料之上，進行最簡單的轉化（命名、型態轉換）。實體化為**視圖 (<code>view</code>)**，確保資料最新狀態 [9]。</li>
+                <li><strong>Intermediate（中間）層</strong>：用於複雜的業務邏輯與特徵工程（如創建 <code>age_group</code>），將分散的概念組合成更豐富的實體。實體化為**表 (<code>table</code>)** 以提高查詢效率 [5, 9]。</li>
+                <li><strong>Marts（集市）層</strong>：專為最終使用者設計的高度反正規化模型，可直接用於 BI 儀表板或機器學習模型。實體化為**表 (<code>table</code>)**，以確保效能 [9, 19]。</li>
+            </ul>
+            <h4>dbt 資料模型藍圖</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>層級</th>
+                        <th>模型名稱</th>
+                        <th>實體化策略</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Staging</td>
+                        <td><code>stg_kaggle__stroke_data</code></td>
+                        <td><code>view</code></td>
+                    </tr>
+                    <tr>
+                        <td>Intermediate</td>
+                        <td><code>int_patients_with_features</code></td>
+                        <td><code>table</code></td>
+                    </tr>
+                    <tr>
+                        <td>Marts</td>
+                        <td><code>mrt_patient_health</code></td>
+                        <td><code>table</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>4. 實施強固的資料品質監控</h2>
+            <p>資料品質在醫療保健領域至關重要。本專案將在管線的多個階段實施自動化檢查 [6, 22]：</p>
+            <ul>
+                <li><strong>Python 腳本檢查</strong>：在資料載入到倉儲前，進行基礎驗證，如檢查空值 [8, 18]。</li>
+                <li><strong><code>dbt</code> 數據測試</strong>：在資料轉化後，自動驗證資料完整性 [4, 10]。
+                    <ul>
+                        <li><strong>通用測試 (Generic Tests)</strong>：核心測試，如 <code>not_null</code>、<code>unique</code>、<code>accepted_values</code>，確保資料符合基本規範 [10]。</li>
+                        <li><strong>單一測試 (Singular Tests)</strong>：自訂 SQL 查詢，專門針對特定業務邏輯，例如監控類別不平衡比率 [10]。</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>這種雙重驗證策略確保從資料攝取到最終模型產生的整個過程中的資料完整性與可信賴性。</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>5. 資料視覺化以獲得可行的洞察</h2>
+            <p>透過 Power BI 或 Tableau 等工具，將數據轉化為易於理解的洞察，驅動決策 [5, 11]。</p>
+            <h3>關鍵洞察</h3>
+            <ul>
+                <li><strong>年齡是關鍵因素</strong>：腦中風風險與年齡呈現強烈正相關，特別是年齡超過 50 歲的患者，風險顯著增加 [2, 5]。</li>
+                <li><strong>高血壓與心臟病</strong>：患有高血壓或心臟病的病患，其腦中風發病率遠高於無此類病史的病患 [2, 5]。</li>
+                <li><strong>血糖水平的獨立影響</strong>：高平均血糖水平與腦中風發病有強烈關聯，即使沒有心臟病史的病患也同樣顯著 [1, 2, 5]。</li>
+                <li><strong>多重風險因素的結合</strong>：單獨的 BMI 值難以區分中風患者 [1]，但肥胖與吸菸史的結合會顯著提高風險 [5]。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>6. CI/CD 與管線自動化</h2>
+            <p>使用 Git 與 GitHub Actions 實現持續整合與持續部署（CI/CD），將資料品質控制從手動任務轉變為系統化、自動化的流程 [20, 13]。</p>
+            <h3>GitHub Actions CI/CD 管線</h3>
+            <ul>
+                <li><strong>持續整合 (CI) 工作流</strong>：
+                    <ul>
+                        <li><strong>觸發條件</strong>：針對 <code>main</code> 分支的拉取請求 [20, 13]。</li>
+                        <li><strong>目的</strong>：在程式碼合併前，在獨立環境中測試資料變更，確保資料完整性 [13, 21]。</li>
+                    </ul>
+                </li>
+                <li><strong>持續部署 (CD) 工作流</strong>：
+                    <ul>
+                        <li><strong>觸發條件</strong>：成功合併到 <code>main</code> 分支 [20, 13]。</li>
+                        <li><strong>目的</strong>：將經過驗證的程式碼部署到生產環境，自動更新資料模型 [13]。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>7. 結論與未來建議</h2>
+            <p>本報告為 Kaggle 腦中風預測資料集構建了一個全面的資料管線藍圖，證明了現代資料堆棧工具如何將資料工程從手動過程轉變為一個自動化、可協作的工程學科。</p>
+            <h3>未來建議</h3>
+            <ul>
+                <li><strong>機器學習整合</strong>：在乾淨的資料模型之上，訓練強大的預測模型（如 XGBoost），以提供精準的腦中風風險分數 [1, 23]。</li>
+                <li><strong>即時處理能力</strong>：未來可以整合即時資料流工具，實現對新病患數據的即時風險評估 [3, 24]。</li>
+                <li><strong>資料治理與擴展</strong>：隨著專案規模擴大，建立正式的資料治理框架，以應對更複雜、更敏感的醫療數據 [6, 24]。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="content">
+            <h2>參考文獻 (Works Cited)</h2>
+            <ol>
+                <li>Stroke Prediction:EDA |Resampling |XGBoost - Kaggle, accessed September 1, 2025, https://www.kaggle.com/code/tumpanjawat/stroke-prediction-eda-resampling-xgboost</li>
+                <li>Visual Analysis and Prediction of Stroke, accessed September 1, 2025, https://www.stat.cmu.edu/capstoneresearch/spring2021/315files/team16.html</li>
+                <li>The Importance of ETL in Healthcare: All You Need To Know - Jelvix, accessed September 1, 2025, https://jelvix.com/blog/etl-process-in-healthcare-benefits-challenges-and-best-practices</li>
+                <li>Beginner's Guide to dbt Data Modeling | Estuary, accessed September 1, 2025, https://estuary.dev/blog/dbt-data-modeling/</li>
+                <li>Predicting Stroke Risk with Data: Building a Power BI Dashboard from Medical Check-up Data | by Sudeykacar | Aug, 2025 | Medium, accessed September 1, 2025, https://medium.com/@sudeykacar/predicting-stroke-risk-with-data-building-a-power-bi-dashboard-from-medical-check-up-data-fa59a681a5c8</li>
+                <li>Data Quality in Healthcare: Importance & Solutions - Atlas Systems, accessed September 1, 2025, https://www.atlassystems.com/blog/data-quality-in-healthcare</li>
+                <li>How to Run Analytics for More Actionable, Timely Insights: A Healthcare Data Quality Framework - Health Catalyst, accessed September 1, 2025, https://www.healthcatalyst.com/learn/insights/healthcare-data-quality-4-level-actionable-framework</li>
+                <li>Brain Stroke Dashboard | Tableau Public, accessed September 1, 2025, https://public.tableau.com/app/profile/s.stanislas/viz/BrainStrokeDashboard_16991265009360/BrainStrokeDashboard2</li>
+                <li>Analysing an Imbalanced Stroke Prediction Dataset Using Machine Learning Techniques - UEL Research Repository - University of East London, accessed September 1, 2025, https://repository.uel.ac.uk/item/8xqy4</li>
+                <li>(PDF) Stroke Prediction Using Machine Learning Method with Extreme Gradient Boosting Algorithm - ResearchGate, accessed September 1, 2025, https://www.researchgate.net/publication/365248116_Stroke_Prediction_Using_Machine_Learning_Method_with_Extreme_Gradient_Boosting_Algorithm</li>
+                <li>Stroke Risk Prediction Dataset based on Literature - Kaggle, accessed September 1, 2025, https://www.kaggle.com/datasets/mahatiratusher/stroke-risk-prediction-dataset-v2/data</li>
+                <li>How to Build ETL Data Pipelines for the Healthcare Industry | Integrate.io, accessed September 1, 2025, https://www.integrate.io/blog/data-pipelines-healthcare/</li>
+                <li>healthcare-dataset-stroke-data - Kaggle, accessed September 1, 2025, https://www.kaggle.com/code/rishabh057/healthcare-dataset-stroke-data</li>
+                <li>Regression Stroke Prediction within patients - Kaggle, accessed September 1, 2025, https://www.kaggle.com/code/muhammadammarjamshed/regression-stroke-prediction-within-patients</li>
+                <li>Why Should you Codify your Best Practices in dbt? - phData, accessed September 1, 2025, https://www.phdata.io/blog/why-should-you-codify-your-best-practices-in-dbt/</li>
+                <li>Testing dbt Models - Community Health Toolkit, accessed September 1, 2025, https://docs.communityhealthtoolkit.org/hosting/analytics/testing-dbt-models/</li>
+                <li>Python Code Quality: Best Practices and Tools, accessed September 1, 2025, https://realpython.com/python-code-quality/</li>
+                <li>Building a CI/CD Pipeline for dbt Projects | by Sarath Sagi | itversity - Medium, accessed September 1, 2025, https://medium.com/itversity/building-a-ci-cd-pipeline-for-dbt-projects-6b09b2f3f027</li>
+                <li>bruno-szdl/dbt-ci-cd - GitHub, accessed September 1, 2025, https://github.com/bruno-szdl/dbt-ci-cd</li>
+                <li>Stroke prediction dataset features. | Download Scientific Diagram - ResearchGate, accessed September 1, 2025, https://www.researchgate.net/figure/Stroke-prediction-dataset-features_tbl1_370073891</li>
+                <li>Microsoft Power BI, accessed September 1, 2025, https://app.powerbi.com/view?r=eyJrIjoiOThkNDg3OGUtY2ZmYi00NmY0LTgxMjMtYzdlYTAwZTkyMjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9</li>
+                <li>How to Use Pandas for Data Cleaning and Preprocessing - freeCodeCamp, accessed September 1, 2025, https://www.freecodecamp.org/news/data-cleaning-and-preprocessing-with-pandasbdvhj/</li>
+                <li>Data Cleaning in Python: How to Handle Missing Values, Outliers & More | by Aditi Babu, accessed September 1, 2025, https://medium.com/@aditib259/data-cleaning-in-python-how-to-handle-missing-values-outliers-more-8f8b68b12436</li>
+                <li>Predicting a Stroke - Kaggle, accessed September 1, 2025, https://www.kaggle.com/code/joshuaswords/predicting-a-stroke-shap-lime-explainer-eli5</li>
+                <li>Intro to dbt for Healthcare | The Tuva Project, accessed September 1, 2025, https://www.thetuvaproject.com/blog/intro-dbt-for-healthcare</li>
+                <li>Intermediate: Purpose-built transformation steps | dbt Developer Hub, accessed September 1, 2025, https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate</li>
+                <li>Let's Build a Data Quality Checker in Python (Step-by-Step Tutorial) - YouTube, accessed September 1, 2025, https://www.youtube.com/watch?v=1kpZQpoxCWI</li>
+                <li>Concept | Data quality rules - Dataiku Knowledge Base, accessed September 1, 2025, https://knowledge.dataiku.com/latest/automation/data-quality/concept-data-quality.html</li>
+                <li>Quickstart for GitHub Actions, accessed September 1, 2025, https://docs.github.com/en/actions/get-started/quickstart</li>
+                <li>Integrating with GitHub Actions – CI/CD pipeline to deploy a Web App to Amazon EC2, accessed September 1, 2025, https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/</li>
+            </ol>
+        </div>
+    </div>
+
+</body>
+</html>

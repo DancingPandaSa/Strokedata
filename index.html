@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中風預測資料工程與分析報告</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+       .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 15px;
+        }
+        ul li, ol li {
+            margin-bottom: 5px;
+        }
+        blockquote {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>腦中風預測資料工程與分析報告</h1>
+    
+    <h2>專案概述</h2>
+    <p>本報告旨在為 Kaggle 腦中風預測資料集（Stroke Prediction Dataset）構建一套完整的、生產級的資料管線與分析藍圖 [1, 2]。該專案的最終目標是將原始醫療數據轉化為可行的洞察，並為未來的機器學習模型提供乾淨、可靠的資料基礎，從而協助醫療專業人員進行預防性護理與策略決策。本報告詳細闡述了從資料獲取、預處理、建模、品質監控、視覺化，到版本控制與自動化部署的七個關鍵階段，為專案的實施提供了全面的技術指南。</p>
+    <p>此藍圖採用現代資料堆棧（Modern Data Stack）的理念，遵循提取-加載-轉化（ELT）的架構模式。這與傳統的提取-轉化-加載（ETL）流程有所不同，ELT模式將原始資料首先載入至資料倉儲，之後所有的轉化邏輯都在倉儲內部進行。這種方法提供了更高的靈活性與可擴展性，並允許資料轉化邏輯以程式碼形式進行版本控制、測試與文件化。本專案將利用 Python/Pandas 進行初始資料提取與清理，使用 MySQL 作為資料倉儲，並透過 dbt 實現強大的倉儲內資料轉化與建模 [3, 4]。</p>
+    <p>在資料分析方面，本報告揭示了幾個與腦中風風險高度相關的核心洞察。分析顯示，年齡、高血壓、高血糖水平是主要的腦中風風險因素。具體而言，年齡超過50歲並伴有高血壓的患者，其腦中風風險最高。此外，高血糖水平與腦中風發病率之間也存在顯著正相關性，即使沒有心臟病史的患者也是如此 [2, 5]。這些基於數據的發現為醫療服務提供者提供了明確的目標，以針對高風險族群實施早期干預與預防性護理。</p>
+    <p>總體而言，本報告所規劃的資料管線不僅能夠處理、分析此資料集，更為處理真實世界中更複雜、更敏感的醫療數據奠定了堅實的基礎。透過自動化的資料品質檢查與版本控制，本專案確保了從源頭到分析結果的資料完整性與可信賴性，這在醫療保健領域尤為重要 [6, 7]。</p>
+
+    <h2>專案引言：資料驅動的醫療保健方法</h2>
+    <p>腦中風是全球範圍內導致死亡和殘疾的主要原因之一。據估計，每四人中就有一人一生中會經歷一次腦中風，其後果往往是災難性的 [8]。然而，透過及早識別高風險個體，醫療專業人員可以採取預防措施，從而顯著降低發病率和嚴重程度 [5, 9]。這正是資料科學與資料工程發揮關鍵作用的領域。</p>
+    <p>資料科學不再僅限於學術研究，它已成為轉變傳統醫療模式的強大工具。透過分析大型病患資料集，可以識別出潛在的健康模式、風險因素與關聯性，從而將被動應對疾病轉變為主動預防疾病 [10]。本專案的目標正是基於這一理念，透過構建一個端到端的資料管線，將一個靜態的醫療數據集轉化為一個動態、可擴展且可靠的資料資產 [11]。這個資產不僅能為當前的分析提供基礎，也將為未來的機器學習模型訓練提供穩定的輸入。</p>
+    <p>本報告將按照使用者所提出的七個階段順序進行詳細闡述，每個部分都將深入探討其技術實施、設計決策背後的原理，以及在醫療數據背景下的特殊考量。這不僅是一份技術指南，更是一份專業級專案的藍圖，旨在為資料工程師、資料科學家以及任何對現代資料堆棧感興趣的技術從業者提供深刻的見解與實用建議。</p>
+
+    <h2>1. 系統架構與資料流總覽</h2>
+    <p>現代資料工程的核心在於建立一個可重複、可擴展且可驗證的資料管線。本專案的系統架構旨在實現這一目標，其視覺化藍圖體現了從資料來源到最終消費的無縫流程。</p>
+    
+    <h3>資料流架構圖</h3>
+    <p>[在此處插入一個視覺化的系統架構圖，圖中包含以下節點及其資料流向]<br>
+    資料來源 (Kaggle Dataset) -&gt; 提取-加載 (Python/Pandas) -&gt; 資料倉儲 (MySQL) -&gt; 資料建模 (dbt) -&gt; 資料品質監控 (Python/dbt) -&gt; 可視化 (Power BI/Tableau/Streamlit) / 版本控制 + 自動化 (Git/GitHub Actions)</p>
+
+    <h3>架構組件詳述</h3>
+    <p>此架構是一個典型的現代 ELT（提取-加載-轉化）管線，而非傳統的 ETL（提取-轉化-加載）流程。這種區別至關重要：ELT 將資料的清洗與轉化放在資料加載到倉儲之後，這使得所有轉化邏輯都可以使用強大的 SQL 進行，並能被 dbt 等工具進行版本控制、測試與文件化 [3, 4]。這提供了一個更為靈活且可審計的資料處理流程。</p>
+    <ul>
+        <li><strong>資料來源（Data Source）</strong>: 我們的資料來源是 Kaggle 上的「Healthcare Dataset: Stroke Data」資料集 [1, 2]。在真實世界的醫療場景中，這可能包括電子健康記錄（EHR）、醫療設備數據、實驗室資訊系統或保險理賠數據 [3, 12]。</li>
+        <li><strong>提取與加載（Extract & Load）</strong>: 初始資料獲取階段將使用 Python 和 Pandas 庫來執行。其核心任務是從 CSV 文件中讀取原始資料，並將其直接加載到 MySQL 資料倉儲的指定原始模式（raw schema）中 [13, 14]。在此階段，資料不做任何重大轉化，僅進行基本格式檢查以確保資料能成功載入。</li>
+        <li><strong>資料倉儲（Data Warehouse）</strong>: MySQL 服務器將作為中央資料倉儲，儲存原始（raw）數據與 dbt 轉化後的（transformed）數據。資料倉儲是單一事實來源（single source of truth）的核心，所有下游分析與報告都將從這裡獲取數據 [3]。</li>
+        <li><strong>資料建模（Data Modeling）</strong>: dbt（Data Build Tool）是本專案的轉化引擎。它將在資料倉儲內部執行所有的轉化邏輯。dbt 透過使用 SQL 程式碼來建立、測試與維護資料模型，並將這些模型分為三個邏輯層次：Staging、Intermediate 和 Marts [15]。這種結構化的方法將複雜的資料邏輯分解為更小、更易管理的組件，確保了可維護性與可讀性。</li>
+        <li><strong>資料品質監控（Data Quality Monitoring）</strong>: 資料品質在醫療保健領域至關重要。本專案將在資料管線的兩個關鍵點實施品質檢查：一是在 Python 數據處理腳本中進行基礎的規則檢查（例如檢查空值），二是利用 dbt 內置的測試框架在資料轉化過程中強制執行數據完整性規則 [16, 17]。</li>
+        <li><strong>可視化（Visualization）</strong>: 一旦資料經過清洗與建模，最終的分析模型（Marts）將被可視化工具（如 Power BI 或 Tableau）所利用，以建立互動式儀表板 [5, 8]。這些儀表板將為使用者提供直接的、可操作的洞察，無需撰寫複雜的查詢。</li>
+        <li><strong>版本控制與自動化（Version Control & Automation）</strong>: Git 與 GitHub Actions 構成了整個流程的基礎。所有程式碼（包括 Python 腳本、dbt 模型與配置文件）都將儲存在 Git 儲存庫中，而 GitHub Actions 將自動化管線的持續整合（CI）與持續部署（CD）流程，確保程式碼變更在部署到生產環境前都經過了嚴格的測試 [18, 19]。</li>
+    </ul>
+    <p>在醫療保健領域，處理機密數據時必須考量額外的安全與合規性要求。雖然此公開資料集不包含敏感的個人健康資訊（PHI），但在實際應用中，管線的每個階段都必須嚴格遵守 HIPAA（美國健康保險可攜帶與責任法案）等規範 [6, 12]。這包括對靜態與傳輸中的數據進行加密，並在適當時實施去識別化技術，以確保病患隱私。本架構將這些考慮納入設計，使其具備在真實世界中安全處理醫療數據的能力。</p>
+
+    <h2>2. 資料獲取、清洗與預處理（ETL）</h2>
+    <p>此階段是資料管線的起點，其目標是將原始資料載入到資料倉儲，並為後續的轉化與建模工作奠定基礎。一個專業的處理流程始於對原始資料的全面理解。</p>
+    
+    <h3>2.1 原始資料概況分析</h3>
+    <p>Kaggle 提供的此資料集包含 5,110 個病患觀察值（行）和 12 個屬性（列） [2, 13, 20]。每個觀察值都對應一位病患，記錄了其健康狀況與生活方式相關的變數。資料集中的特徵包含年齡、性別、高血壓史、心臟病史、婚姻狀況、工作類型、居住地類型、平均血糖水平、BMI、吸菸狀況與是否發生過腦中風（目標變數） [1]。</p>
+    <p>在進行任何轉化之前，必須進行詳細的資料概況分析（data profiling）以識別潛在的品質問題。初步檢查揭示了以下關鍵問題：</p>
+    <ul>
+        <li><strong>缺失值（Missing Values）</strong>: BMI 欄位存在 201 個缺失值，而其他所有欄位都包含完整的 5,110 筆數據 [13, 14]。</li>
+        <li><strong>數據異常（Anomalies）</strong>: 性別（<code>gender</code>）欄位有一個單一的異常值「Other」，這與主要類別「Male」和「Female」不一致 [2]。</li>
+        <li><strong>類別不平衡（Class Imbalance）</strong>: 目標變數 <code>stroke</code> 存在嚴重的類別不平衡問題。資料集中只有 249 名病患發生過腦中風（值為1），而有 4,860 名病患未發生（值為0），兩者比例約為1:20 [2, 21]。</li>
+        <li><strong>無意義特徵（Irrelevant Features）</strong>: <code>id</code> 欄位是病患的唯一識別碼，對預測模型沒有任何價值，應在後續處理中移除 [2, 10]。</li>
+    </ul>
+    <p>下表總結了初始資料集的概況與品質問題，為後續的預處理工作提供了清晰的依據。</p>
+
+    <h4>表1：初始資料集概況與品質問題</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>特徵 (Feature)</th>
+                <th>資料型態 (Data Type)</th>
+                <th>非空值計數 (Non-Null Count)</th>
+                <th>缺失值 (Missing Values)</th>
+                <th>異常 / 備註 (Anomalies / Notes)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td>整數 (int64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>唯一識別碼，對模型無用，應移除。</td>
+            </tr>
+            <tr>
+                <td><code>gender</code></td>
+                <td>物件 (object)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>包含 "Male", "Female", 和一個不顯著的 "Other" 類別，應移除。</td>
+            </tr>
+            <tr>
+                <td><code>age</code></td>
+                <td>浮點數 (float64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><code>hypertension</code></td>
+                <td>整數 (int64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>0=否, 1=是。</td>
+            </tr>
+            <tr>
+                <td><code>heart_disease</code></td>
+                <td>整數 (int64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>0=否, 1=是。</td>
+            </tr>
+            <tr>
+                <td><code>ever_married</code></td>
+                <td>物件 (object)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>"Yes", "No"。</td>
+            </tr>
+            <tr>
+                <td><code>work_type</code></td>
+                <td>物件 (object)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>多類別。</td>
+            </tr>
+            <tr>
+                <td><code>Residence_type</code></td>
+                <td>物件 (object)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>"Urban", "Rural"。</td>
+            </tr>
+            <tr>
+                <td><code>avg_glucose_level</code></td>
+                <td>浮點數 (float64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><code>bmi</code></td>
+                <td>浮點數 (float64)</td>
+                <td>4909</td>
+                <td><strong>201</strong></td>
+                <td>存在缺失值。</td>
+            </tr>
+            <tr>
+                <td><code>smoking_status</code></td>
+                <td>物件 (object)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>"formerly smoked", "never smoked", "smokes"。</td>
+            </tr>
+            <tr>
+                <td><code>stroke</code></td>
+                <td>整數 (int64)</td>
+                <td>5110</td>
+                <td>0</td>
+                <td>目標變數。存在嚴重的類別不平衡（約1:20）。</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>2.2 資料品質與預處理策略</h3>
+    <p>一個強固的預處理策略需要針對上述問題，並考慮到每種方法的優點與缺點。在此階段，我們將主要使用 Python 和 Pandas 庫來執行這些任務 [22, 23]。</p>
+    <ul>
+        <li><strong>缺失值處理</strong>
+            <p><code>bmi</code> 欄位的 201 個缺失值是最大的挑戰。雖然可以簡單地刪除這些包含缺失值的行，但這會導致資料量的減少，特別是對於少數類別的觀察值可能造成影響 [22]。</p>
+            <p>一種更為專業的方法是採用插補（imputation）技術。最簡單的插補是使用該欄位的平均值或中位數填充缺失值 [10, 22, 23]。然而，這種方法會扭曲資料的分布，並可能稀釋其與其他變數之間的關係。</p>
+            <p>為了更準確地處理，可以考慮使用更先進的插補技術，例如線性插值 (<code>linear interpolation</code>) [14]，或更複雜的基於機器學習的方法，例如使用決策樹或其他迴歸模型來預測缺失的 <code>bmi</code> 值 [24]。這種基於模型的插補方法能更好地捕捉變數間的潛在關係，從而生成更為可靠的填充值。本專案建議採用更為穩健的策略，以確保 <code>bmi</code> 欄位的完整性與準確性，這在後續分析中至關重要。</p>
+        </li>
+        <li><strong>異常值與類別特徵處理</strong>
+            <p><code>gender</code> 欄位的「Other」類別由於只有一筆記錄，在統計上不具意義，且可能在後續的編碼中造成問題 [2]。因此，建議直接將該行記錄從資料集中移除。</p>
+            <p>對於 <code>ever_married</code>、<code>work_type</code>、<code>Residence_type</code> 和 <code>smoking_status</code> 等所有非數值類別特徵，必須將其轉換為數值格式，以便機器學習模型能夠處理 [22]。單熱編碼（One-Hot Encoding）是一種常用的技術，它會為每個類別創建一個新的二元（0或1）欄位，從而避免模型錯誤地將類別間的關係解釋為有序的數值關係。</p>
+            <p><code>id</code> 欄位作為唯一識別碼，對預測任務沒有任何貢獻，應在預處理階段予以移除 [2, 10]。</p>
+        </li>
+        <li><strong>處理類別不平衡</strong>
+            <p>目標變數 <code>stroke</code> 的嚴重類別不平衡是此資料集的另一關鍵挑戰 [9]。如果直接在原始資料上訓練模型，模型可能會傾向於預測佔多數的「無中風」類別，從而獲得高準確率，但其在預測真正「中風」案例上的表現將非常差。這使得準確率成為一個誤導性的評估指標 [1]。</p>
+            <p>因此，解決此問題的方法不應在預處理階段進行，而應在後續的機器學習建模階段。常用的技術包括過採樣（oversampling），例如使用 SMOTE（Synthetic Minority Over-sampling Technique）來人工生成少數類別的樣本 [9, 24]，或欠採樣（undersampling），以減少多數類別的樣本數。這些技術將使訓練集更加平衡，從而讓模型能夠更有效地學習兩類別的特徵。</p>
+        </li>
+    </ul>
+    <p>下表總結了為解決這些資料品質問題而規劃的具體行動與其背後的原因。</p>
+
+    <h4>表2：資料清洗與轉化規則</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>特徵 (Feature)</th>
+                <th>問題 (Problem)</th>
+                <th>建議解決方案 (Proposed Solution)</th>
+                <th>理由 (Rationale)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>bmi</code></td>
+                <td>201 個缺失值。</td>
+                <td>採用線性插值或迴歸插補來填充。</td>
+                <td>避免簡單插補對資料分布的扭曲，保留潛在的變數關聯性，提高模型準確性。</td>
+            </tr>
+            <tr>
+                <td><code>gender</code></td>
+                <td>單一異常值 "Other"。</td>
+                <td>移除包含該異常值的單一記錄。</td>
+                <td>該記錄在統計上不顯著，且可能在編碼時造成問題。</td>
+            </tr>
+            <tr>
+                <td><code>ever_married</code>, <code>work_type</code>, <code>Residence_type</code>, <code>smoking_status</code>, <code>gender</code></td>
+                <td>非數值類別特徵。</td>
+                <td>使用單熱編碼 (OneHotEncoder) 轉換為數值。</td>
+                <td>確保機器學習模型能夠正確處理這些特徵，並防止其被誤解為有序數值。</td>
+            </tr>
+            <tr>
+                <td><code>id</code></td>
+                <td>唯一的病患識別碼。</td>
+                <td>從資料集中移除。</td>
+                <td>對預測任務沒有任何貢獻，會增加模型訓練的複雜性。</td>
+            </tr>
+            <tr>
+                <td><code>stroke</code></td>
+                <td>類別不平衡（約1:20）。</td>
+                <td>在機器學習建模階段採用過採樣 (oversampling) 或欠採樣 (undersampling) 技術。</td>
+                <td>解決準確率指標的誤導性，使模型能夠有效學習並預測少數類別（腦中風）的案例。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. 資料倉儲與 dbt 進階資料建模</h2>
+    <p>在資料經過初步清洗並加載到資料倉儲後，下一步是利用 dbt 框架進行進階的資料建模。這個階段是將原始、分散的資料轉化為一個有組織、邏輯化的資料資產，為下游分析與機器學習提供服務的關鍵。</p>
+
+    <h3>3.1 資料倉儲設計</h3>
+    <p>本專案將使用 MySQL 作為資料倉儲 [3]。其設計應包含兩個主要模式（schema）：</p>
+    <ul>
+        <li><strong><code>raw</code> 模式</strong>: 這個模式將儲存從 Kaggle 資料集直接加載的原始資料，不進行任何轉化。這確保了我們始終有一個未經觸碰的單一事實來源，便於審計與重現資料處理過程。</li>
+        <li><strong><code>dbt</code> 模式</strong>: 這個模式將儲存 dbt 轉化後的所有資料模型（Staging、Intermediate 和 Marts）。這樣做的目的是將轉化邏輯的輸出與原始資料分開，以實現清晰的職責分離。</li>
+    </ul>
+
+    <h3>3.2 dbt 框架：多層次方法</h3>
+    <p>dbt 的核心價值在於它將資料轉化視為軟體開發的過程。它允許資料團隊以協作、版本控制和測試的方式來管理 SQL 程式碼 [18, 25]。dbt 的三層次模型（staging、intermediate、marts）是一種公認的最佳實踐，它將複雜的資料邏輯拆解為可管理的組件，從而實現了可擴展性與可維護性 [15, 26]。</p>
+
+    <h4>1. Staging（暫存）層</h4>
+    <ul>
+        <li><strong>目的</strong>：此層是資料轉化的第一步。它直接建立在原始資料之上，並進行最簡單、最直接的轉化 [15]。它的核心職責是為後續的複雜轉化提供一個乾淨、一致的基礎。</li>
+        <li><strong>具體操作</strong>：
+            <ul>
+                <li><strong>命名與清理</strong>: 將原始資料中命名不一致或不易理解的欄位重新命名（例如，將 <code>avg_glucose_level</code> 更名為 <code>average_glucose_level</code>）[10, 15]。</li>
+                <li><strong>資料型態轉換</strong>: 確保所有欄位的資料型態都正確且一致。</li>
+                <li><strong>欄位選擇</strong>: 移除無用的欄位，例如 <code>id</code> [10]。</li>
+            </ul>
+        </li>
+        <li><strong>命名慣例與實體化（Materialization）</strong>: 此層的模型將命名為 <code>stg_&lt;資料來源&gt;__&lt;實體&gt;</code>，例如 <code>stg_kaggle__patients</code>。它們應被實體化為<strong>視圖（<code>view</code>）</strong>，以確保它們始終代表底層原始資料的最新狀態，並且不會在資料倉儲中產生冗餘的實體表 [15]。</li>
+    </ul>
+
+    <h4>2. Intermediate（中間）層</h4>
+    <ul>
+        <li><strong>目的</strong>：此層建立在 Staging 層之上，用於處理複雜的業務邏輯、特徵工程與資料聚合 [15, 26]。它的主要作用是將分散的概念組合成更豐富、更具意義的實體，同時保持最終模型（Marts）的簡潔性。</li>
+        <li><strong>具體操作</strong>：
+            <ul>
+                <li><strong>特徵工程</strong>: 建立新欄位，例如基於 <code>age</code> 欄位創建 <code>age_group</code>（青年、中年、老年） [5]。</li>
+                <li><strong>資料清洗</strong>: 執行複雜的清洗邏輯，例如基於其他特徵來預測並填充缺失的 <code>bmi</code> 值。</li>
+                <li><strong>聚合與聯結</strong>: 將多個來自 Staging 層的模型聯結在一起，或對數據進行聚合，以準備用於最終分析的綜合模型。</li>
+            </ul>
+        </li>
+        <li><strong>命名慣例與實體化</strong>: 此層的模型將命名為 <code>int_&lt;動詞&gt;_&lt;實體&gt;</code>，例如 <code>int_patients_with_features</code>。由於此層的計算可能很繁重，它們應被實體化為<strong>表（<code>table</code>）</strong>，以便下游模型能夠高效地查詢，避免重複計算 [15]。</li>
+    </ul>
+
+    <h4>3. Marts（集市）層</h4>
+    <ul>
+        <li><strong>目的</strong>：此層是整個資料管線的最終產物，專為最終使用者（如商業分析師或機器學習工程師）設計 [15, 26]。這些模型應該是高度反正規化（denormalized）的，並且經過優化，可以直接用於商業智慧（BI）儀表板或機器學習模型的輸入，無需額外的聯結操作。</li>
+        <li><strong>具體操作</strong>：
+            <ul>
+                <li><strong>整合數據</strong>: 將所有相關資訊從 Intermediate 層模型整合到一個單一的、易於理解的表，例如一個名為 <code>mrt_patient_health</code> 的表。</li>
+                <li><strong>最終呈現</strong>: 確保欄位名稱清晰、直觀，且符合業務術語。</li>
+            </ul>
+        </li>
+        <li><strong>命名慣例與實體化</strong>: 此層的模型將命名為 <code>mrt_&lt;業務領域&gt;_&lt;實體&gt;</code>，例如 <code>mrt_patient_health</code>。它們也應被實體化為<strong>表（<code>table</code>）</strong>，以確保儀表板的查詢速度與效能 [15]。</li>
+    </ul>
+    <p>dbt 這種分層建模的方法不僅提高了程式碼的可維護性，還創造了一個邏輯清晰的資料血緣圖（DAG, Directed Acyclic Graph）。這種結構將資料處理的流程從眾多、狹窄的原始概念，轉化為少數、寬廣、聯結的概念，形成了 dbt 倡導的「箭頭向右」的理想圖形 [26]。這使得任何分析師或工程師都能快速了解資料如何從原始狀態被轉化為最終形式，從而增強了整個資料專案的透明度與協作性。</p>
+    <p>下表概述了本專案中計畫建立的 dbt 資料模型。</p>
+
+    <h4>表3：dbt 資料模型藍圖</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>層級 (Layer)</th>
+                <th>模型名稱 (Model Name)</th>
+                <th>目的 (Purpose)</th>
+                <th>依賴項 (Dependencies)</th>
+                <th>實體化策略 (Materialization Strategy)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Staging</td>
+                <td><code>stg_kaggle__stroke_data</code></td>
+                <td>處理原始資料，進行欄位重命名與型態轉換。</td>
+                <td><code>source(kaggle)</code></td>
+                <td><code>view</code></td>
+            </tr>
+            <tr>
+                <td>Intermediate</td>
+                <td><code>int_patients_with_bmi</code></td>
+                <td>填充 <code>bmi</code> 欄位的缺失值。</td>
+                <td><code>stg_kaggle__stroke_data</code></td>
+                <td><code>table</code></td>
+            </tr>
+            <tr>
+                <td>Intermediate</td>
+                <td><code>int_patients_with_features</code></td>
+                <td>建立 <code>age_group</code> 等新特徵，並對數據進行清洗。</td>
+                <td><code>int_patients_with_bmi</code></td>
+                <td><code>table</code></td>
+            </tr>
+            <tr>
+                <td>Marts</td>
+                <td><code>mrt_patient_health</code></td>
+                <td>最終的分析用模型，整合所有健康與生活方式特徵，供 BI 與 ML 使用。</td>
+                <td><code>int_patients_with_features</code></td>
+                <td><code>table</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4. 實施強固的資料品質監控</h2>
+    <p>在醫療保健領域，資料品質不僅是一個技術考量，更是一個道德與安全要求 [6, 7]。不準確的數據可能導致錯誤的診斷、無效的治療計畫，甚至危及生命。因此，建立一個系統化、自動化的資料品質監控框架是本專案不可或缺的一部分。</p>
+
+    <h3>4.1 數據完整性框架</h3>
+    <p>資料品質可以從多個維度進行評估，本報告將重點關注以下幾項，並將其融入到自動化檢查中 [27, 28]：</p>
+    <ul>
+        <li><strong>完整性（Completeness）</strong>: 確保所有必要的欄位都沒有缺失值。</li>
+        <li><strong>有效性（Validity）</strong>: 確保數據值在預期的範圍內，格式正確，並符合預定義的規則（例如，年齡應為正數，性別欄位僅限於 'Male' 和 'Female'）。</li>
+        <li><strong>一致性（Consistency）</strong>: 確保不同欄位或不同數據源的數據彼此之間沒有矛盾。</li>
+        <li><strong>獨特性（Uniqueness）</strong>: 確保沒有重複的記錄，尤其是在主鍵欄位上。</li>
+    </ul>
+
+    <h3>4.2 自動化資料品質檢查</h3>
+    <p>本專案將利用 Python 與 dbt 兩種工具來實現資料品質監控，形成一個多層次的檢查網。</p>
+
+    <h4>Python 腳本檢查</h4>
+    <p>在資料加載到倉儲之前，Python 腳本將進行基礎的資料驗證。例如，一個腳本可以檢查 <code>bmi</code> 欄位在插補後是否還存在任何空值，或者確認所有行數都符合預期。這些檢查提供了對原始資料的第一道防線 [22, 23]。</p>
+
+    <h4>dbt 數據測試</h4>
+    <p>dbt 框架提供了強大的內置與自訂測試功能，這些測試將在資料轉化後，自動驗證資料的完整性 [4, 16]。</p>
+    <ul>
+        <li><strong>通用測試（Generic Tests）</strong>: dbt 核心提供了四個開箱即用的通用測試，它們應該在大多數模型中被廣泛應用：
+            <ul>
+                <li><code>not_null</code>: 確保關鍵欄位（例如 <code>age</code>、<code>gender</code>）沒有空值 [16]。</li>
+                <li><code>unique</code>: 確保 <code>id</code> 欄位是唯一的 [16]。</li>
+                <li><code>accepted_values</code>: 確保類別欄位（例如 <code>gender</code>）的值僅限於預定義的集合（'Male', 'Female'）[16]。</li>
+            </ul>
+        </li>
+        <li><strong>單一測試（Singular Tests）</strong>: 這些是專門針對特定業務邏輯的自訂 SQL 查詢。它們返回失敗的記錄。這在監控複雜業務規則時特別有用 [16]。一個關鍵的應用是監控 <code>stroke</code> 欄位的類別不平衡比率。由於原始資料的「中風」與「無中風」比例約為 1:20 [2]，一個單一測試可以定期檢查這個比率是否在一個可接受的範圍內，如果出現顯著偏差，則發出警告。這種主動監控可以幫助我們在資料源發生漂移時迅速做出反應，防止下游模型在未來的數據上表現不佳。</li>
+    </ul>
+    <p>總體而言，這種結合了程式碼層級（Python）和資料庫層級（dbt）的雙重驗證策略，確保了從資料攝取到最終模型產生的整個過程中的資料完整性與可信賴性。這在處理敏感且高風險的醫療數據時，是不可妥協的。</p>
+
+    <h2>5. 資料視覺化以獲得可行的洞察</h2>
+    <p>資料視覺化的最終目標是將複雜的數據轉化為易於理解、可操作的洞察，從而驅動決策 [5]。本專案將利用 Power BI 或 Tableau 等商業智慧工具，建立一個互動式儀表板，為醫療專業人員提供關於腦中風風險因素的全面視圖。</p>
+    
+    <h3>5.1 儀表板策略</h3>
+    <p>儀表板的設計將以使用者為中心，使醫生和醫療經理能夠輕鬆地探索數據、識別高風險族群並評估不同因素對腦中風發病率的影響。儀表板將包含多個層次的分析，從總體概覽到特定風險因素的深入探討 [5, 8, 21]。</p>
+
+    <h3>5.2 關鍵視覺化與洞察</h3>
+    <p>基於對資料集的初步探索性分析（EDA），可以識別出以下幾個關鍵的視覺化與其所揭示的洞察。這些分析是從單變量、雙變量和多變量分析中提取出來的 [1]。</p>
+    <ul>
+        <li><strong>按人口統計學分析腦中風發病率</strong>：
+            <ul>
+                <li><strong>年齡與發病率</strong>：視覺化分析顯示，腦中風的風險與年齡呈現強烈正相關性 [2, 5]。特別是，50歲以上的患者，其腦中風風險急劇增加。</li>
+                <li><strong>性別差異</strong>：分析顯示，腦中風患者中有超過 56% 為女性，這表明性別在風險評估中扮演著重要角色 [8]。</li>
+            </ul>
+        </li>
+        <li><strong>風險因素分析</strong>：
+            <ul>
+                <li><strong>高血壓與心臟病</strong>：互動式圖表將顯示高血壓與心臟病對腦中風風險的顯著影響。數據顯示，患有高血壓或心臟病的病患，其腦中風發病率遠高於無此類病史的病患 [2, 5]。</li>
+                <li><strong>血糖水平</strong>：散點圖或分組長條圖可以清楚地顯示高平均血糖水平與腦中風發病之間的強烈關聯性 [1, 2, 5]。這種關聯甚至在沒有心臟病史的病患中也同樣顯著。</li>
+                <li><strong>BMI 與吸菸狀況</strong>：儀表板可以通過視覺化來探究 BMI 和吸菸狀況對腦中風風險的影響 [5, 8]。雖然單獨的 BMI 值似乎無法有效區分中風患者與非中風患者 [1]，但將其與吸菸史結合時，可以發現肥胖加上吸菸史會顯著提高腦中風的機率 [5]。</li>
+            </ul>
+        </li>
+    </ul>
+    <p>將這些單獨的發現整合在一起，儀表板可以實現更高層次的多變量分析。例如，使用者可以篩選出「年齡大於50歲、患有高血壓且吸菸」的患者群體，並觀察其腦中風發病率。這種綜合分析能夠精確地識別出最高風險的患者細分市場，從而將資料洞察直接轉化為針對性的預防性護理策略。</p>
+
+    <h4>表4：視覺化分析的關鍵洞察</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>洞察 (Insight)</th>
+                <th>相關因素 (Contributing Factors)</th>
+                <th>業務啟示 (Business Implication)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>腦中風風險隨年齡顯著增加，尤其是在中年以後。</td>
+                <td><code>age</code></td>
+                <td>建議對年齡超過50歲的人群進行更頻繁的健康檢查與風險評估。</td>
+            </tr>
+            <tr>
+                <td>患有高血壓和心臟病的患者具有更高的腦中風風險。</td>
+                <td><code>hypertension</code>, <code>heart_disease</code></td>
+                <td>醫療專業人員應優先關注並管理這些病患的健康狀況，將其作為預防性護理的重點目標。</td>
+            </tr>
+            <tr>
+                <td>高血糖水平是獨立於其他心臟疾病的腦中風風險因素。</td>
+                <td><code>avg_glucose_level</code></td>
+                <td>即使沒有已知的心臟病史，也應對血糖水平高的個體進行風險評估與干預。</td>
+            </tr>
+            <tr>
+                <td>肥胖與吸菸史的結合會顯著提高腦中風風險。</td>
+                <td><code>bmi</code>, <code>smoking_status</code></td>
+                <td>鼓勵針對同時具有這兩種危險因素的個體進行生活方式干預與健康諮詢。</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>6. CI/CD 與管線自動化</h2>
+    <p>一個專業的資料管線不僅需要強大的處理能力，還需要強固的治理與自動化流程來確保其可靠性與可維護性。本專案將利用 Git、GitHub 和 GitHub Actions 來實現持續整合與持續部署（CI/CD）的自動化，從而將資料品質控制從手動任務轉變為系統化的、自動化的流程 [18, 19]。</p>
+
+    <h3>6.1 版本控制的作用</h3>
+    <p>Git 是現代協作開發的基石。透過使用 Git，多個團隊成員可以在不同的分支上獨立工作，並透過拉取請求（Pull Requests, PRs）來提議與審核程式碼變更 [25]。這種模式提供了一個清晰的審核軌跡，確保了所有對資料管線的變更都經過了審核與批准。</p>
+
+    <h3>6.2 GitHub Actions CI/CD 管線</h3>
+    <p>GitHub Actions 是一個強大的 CI/CD 平台，它允許我們在程式碼被推送到儲存庫時自動執行工作流 [29, 30]。本專案將建立兩個主要的工作流來實現自動化：</p>
+
+    <h4>持續整合（CI）工作流</h4>
+    <ul>
+        <li><strong>觸發條件</strong>：當有任何針對 <code>main</code> 分支的拉取請求被創建或更新時，此工作流將被觸發 [18, 19]。</li>
+        <li><strong>目的</strong>：在程式碼合併到生產環境前，驗證其正確性與資料完整性。</li>
+        <li><strong>執行步驟</strong>：
+            <ol>
+                <li><strong>環境設定</strong>: 安裝 dbt 及其所有依賴項。</li>
+                <li><strong>孤立測試</strong>: 為了確保測試結果的可靠性，工作流將為每個拉取請求創建一個唯一的、孤立的測試模式（schema）。這防止了不同開發者之間的測試衝突 [19]。</li>
+                <li><strong>精簡 CI（Slim CI）</strong>: 利用 dbt 的狀態比較功能，該工作流將只運行與程式碼變更直接相關的模型與測試，而不是整個資料管線 [19]。這顯著減少了運行時間與資源消耗，使得快速反饋成為可能。</li>
+                <li><strong>執行測試</strong>: 工作流將運行 <code>dbt test</code> 命令來執行所有定義的通用與單一測試。如果任何測試失敗，整個工作流將失敗，並阻止程式碼被合併到 <code>main</code> 分支 [18]。</li>
+            </ol>
+        </li>
+    </ul>
+
+    <h4>持續部署（CD）工作流</h4>
+    <ul>
+        <li><strong>觸發條件</strong>：當程式碼被成功合併（push）到 <code>main</code> 分支時，此工作流將被觸發 [18, 19]。</li>
+        <li><strong>目的</strong>：將經過驗證的程式碼部署到生產環境中，並將其轉化應用於資料倉儲。</li>
+        <li><strong>執行步驟</strong>：
+            <ol>
+                <li><strong>環境設定</strong>: 安裝 dbt 及其所有依賴項。</li>
+                <li><strong>部署</strong>: 執行 <code>dbt build</code> 命令。這個命令將執行所有必要的轉化邏輯，並在資料倉儲中建立或更新最終的 Marts 模型 [18]。同樣，此步驟也會使用 dbt 的狀態比較功能，只更新受影響的資料模型，以確保部署的效率 [19]。</li>
+                <li><strong>上傳工件</strong>: 成功部署後，新的 dbt manifest 文件將作為工件上傳。這個文件是下一個 CI 流程中進行狀態比較的基礎 [19]。</li>
+            </ol>
+        </li>
+    </ul>
+    <p>這套自動化的 CI/CD 管線是資料治理的最終執行機制。它確保了任何新的程式碼變更在被部署到生產環境前都經過了嚴格的資料品質與邏輯驗證。這不僅提高了資料資產的可靠性，也將品質保證從一個手動的、事後諸葛的任務，轉變為一個整合在開發流程中的、主動的系統性步驟。</p>
+
+    <h2>7. 結論與未來建議</h2>
+    <p>本報告為 Kaggle 腦中風預測資料集構建了一個全面的、生產級的資料管線藍圖。這個藍圖不僅遵循了使用者所要求的架構流程，更深入探討了其背後的技術原理、最佳實踐與在醫療保健領域的特殊考量。透過實施這個藍圖，原始的、帶有品質問題的資料集將被轉化為一個結構化、可信賴且可重複使用的資料資產，為後續的分析與決策提供了堅實的基礎。</p>
+    <p>這個專案的成功在於它證明了現代資料堆棧工具（如 Python、MySQL 和 dbt）如何協同工作，將資料工程從一個繁瑣的手動過程，轉變為一個自動化、協作且可審計的工程學科。這使得資料團隊能夠專注於產生價值，而非僅僅維護基礎設施。</p>
+    <p>展望未來，本專案可以朝以下幾個方向進一步發展，以實現更高的價值與更廣泛的應用：</p>
+    <ol>
+        <li><strong>機器學習整合</strong>: 構建在乾淨且反正規化的 <code>mrt_patient_health</code> 模型之上的下一步，是訓練一個強大的預測模型 [1, 10]。諸如 XGBoost 或 Random Forest 等演算法都非常適合此類分類任務 [9, 20]。這些模型可以基於病患的特徵，提供一個精準的腦中風風險分數，從而實現從描述性分析到預測性分析的飛躍。</li>
+        <li><strong>即時處理能力</strong>: 在醫療場景中，即時的資料洞察可能至關重要。雖然目前的批次處理架構足以滿足歷史數據分析，但未來的演進可以考慮整合即時資料流工具，以實現對新病患數據的即時風險評估 [3, 12]。</li>
+        <li><strong>資料治理與擴展</strong>: 隨著資料來源的增加與複雜性的提高，建立一個正式的資料治理框架將變得至關重要。這將涉及定義數據所有權、標準化數據辭典與實施更為嚴格的存取控制，特別是在處理敏感的病患資訊時 [6, 12]。</li>
+    </ol>
+    <p>總體而言，本報告所呈現的專案不僅是一個技術成就，更是一個範例，展示了資料驅動的方法如何能夠直接改善醫療保健服務，最終為病患帶來更安全、更有效的護理。</p>
+
+    <h2>Works cited</h2>
+    <ul>
+        <li>Stroke Prediction:EDA |Resampling |XGBoost - Kaggle, accessed September 1, 2025, <a href="https://www.kaggle.com/code/tumpanjawat/stroke-prediction-eda-resampling-xgboost">https://www.kaggle.com/code/tumpanjawat/stroke-prediction-eda-resampling-xgboost</a></li>
+        <li>Visual Analysis and Prediction of Stroke, accessed September 1, 2025, <a href="https://www.stat.cmu.edu/capstoneresearch/spring2021/315files/team16.html">https://www.stat.cmu.edu/capstoneresearch/spring2021/315files/team16.html</a></li>
+        <li>The Importance of ETL in Healthcare: All You Need To Know - Jelvix, accessed September 1, 2025, <a href="https://jelvix.com/blog/etl-process-in-healthcare-benefits-challenges-and-best-practices">https://jelvix.com/blog/etl-process-in-healthcare-benefits-challenges-and-best-practices</a></li>
+        <li>Beginner's Guide to dbt Data Modeling | Estuary, accessed September 1, 2025, <a href="https://estuary.dev/blog/dbt-data-modeling/">https://estuary.dev/blog/dbt-data-modeling/</a></li>
+        <li>Predicting Stroke Risk with Data: Building a Power BI Dashboard from Medical Check-up Data | by Sudeykacar | Aug, 2025 | Medium, accessed September 1, 2025, <a href="https://medium.com/@sudeykacar/predicting-stroke-risk-with-data-building-a-power-bi-dashboard-from-medical-check-up-data-fa59a681a5c8">https://medium.com/@sudeykacar/predicting-stroke-risk-with-data-building-a-power-bi-dashboard-from-medical-check-up-data-fa59a681a5c8</a></li>
+        <li>Data Quality in Healthcare: Importance & Solutions - Atlas Systems, accessed September 1, 2025, <a href="https://www.atlassystems.com/blog/data-quality-in-healthcare">https://www.atlassystems.com/blog/data-quality-in-healthcare</a></li>
+        <li>How to Run Analytics for More Actionable, Timely Insights: A Healthcare Data Quality Framework - Health Catalyst, accessed September 1, 2025, <a href="https://www.healthcatalyst.com/learn/insights/healthcare-data-quality-4-level-actionable-framework">https://www.healthcatalyst.com/learn/insights/healthcare-data-quality-4-level-actionable-framework</a></li>
+        <li>Brain Stroke Dashboard | Tableau Public, accessed September 1, 2025, <a href="https://public.tableau.com/app/profile/s.stanislas/viz/BrainStrokeDashboard_16991265009360/BrainStrokeDashboard2">https://public.tableau.com/app/profile/s.stanislas/viz/BrainStrokeDashboard_16991265009360/BrainStrokeDashboard2</a></li>
+        <li>Analysing an Imbalanced Stroke Prediction Dataset Using Machine Learning Techniques - UEL Research Repository - University of East London, accessed September 1, 2025, <a href="https://repository.uel.ac.uk/item/8xqy4">https://repository.uel.ac.uk/item/8xqy4</a></li>
+        <li>(PDF) Stroke Prediction Using Machine Learning Method with Extreme Gradient Boosting Algorithm - ResearchGate, accessed September 1, 2025, <a href="https://www.researchgate.net/publication/365248116_Stroke_Prediction_Using_Machine_Learning_Method_with_Extreme_Gradient_Boosting_Algorithm">https://www.researchgate.net/publication/365248116_Stroke_Prediction_Using_Machine_Learning_Method_with_Extreme_Gradient_Boosting_Algorithm</a></li>
+        <li>Stroke Risk Prediction Dataset based on Literature - Kaggle, accessed September 1, 2025, <a href="https://www.kaggle.com/datasets/mahatiratusher/stroke-risk-prediction-dataset-v2/data">https://www.kaggle.com/datasets/mahatiratusher/stroke-risk-prediction-dataset-v2/data</a></li>
+        <li>How to Build ETL Data Pipelines for the Healthcare Industry | Integrate.io, accessed September 1, 2025, <a href="https://www.integrate.io/blog/data-pipelines-healthcare/">https://www.integrate.io/blog/data-pipelines-healthcare/</a></li>
+        <li>healthcare-dataset-stroke-data - Kaggle, accessed September 1, 2025, <a href="https://www.kaggle.com/code/rishabh057/healthcare-dataset-stroke-data">https://www.kaggle.com/code/rishabh057/healthcare-dataset-stroke-data</a></li>
+        <li>Regression Stroke Prediction within patients - Kaggle, accessed September 1, 2025, <a href="https://www.kaggle.com/code/muhammadammarjamshed/regression-stroke-prediction-within-patients">https://www.kaggle.com/code/muhammadammarjamshed/regression-stroke-prediction-within-patients</a></li>
+        <li>Why Should you Codify your Best Practices in dbt? - phData, accessed September 1, 2025, <a href="https://www.phdata.io/blog/why-should-you-codify-your-best-practices-in-dbt/">https://www.phdata.io/blog/why-should-you-codify-your-best-practices-in-dbt/</a></li>
+        <li>Testing dbt Models - Community Health Toolkit, accessed September 1, 2025, <a href="https://docs.communityhealthtoolkit.org/hosting/analytics/testing-dbt-models/">https://docs.communityhealthtoolkit.org/hosting/analytics/testing-dbt-models/</a></li>
+        <li>Python Code Quality: Best Practices and Tools, accessed September 1, 2025, <a href="https://realpython.com/python-code-quality/">https://realpython.com/python-code-quality/</a></li>
+        <li>Building a CI/CD Pipeline for dbt Projects | by Sarath Sagi | itversity - Medium, accessed September 1, 2025, <a href="https://medium.com/itversity/building-a-ci-cd-pipeline-for-dbt-projects-6b09b2f3f027">https://medium.com/itversity/building-a-ci-cd-pipeline-for-dbt-projects-6b09b2f3f027</a></li>
+        <li>bruno-szdl/dbt-ci-cd - GitHub, accessed September 1, 2025, <a href="https://github.com/bruno-szdl/dbt-ci-cd">https://github.com/bruno-szdl/dbt-ci-cd</a></li>
+        <li>Stroke prediction dataset features. | Download Scientific Diagram - ResearchGate, accessed September 1, 2025, <a href="https://www.researchgate.net/figure/Stroke-prediction-dataset-features_tbl1_370073891">https://www.researchgate.net/figure/Stroke-prediction-dataset-features_tbl1_370073891</a></li>
+        <li>Microsoft Power BI, accessed September 1, 2025, <a href="https://app.powerbi.com/view?r=eyJrIjoiOThkNDg3OGUtY2ZmYi00NmY0LTgxMjMtYzdlYTAwZTkyMjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">https://app.powerbi.com/view?r=eyJrIjoiOThkNDg3OGUtY2ZmYi00NmY0LTgxMjMtYzdlYTAwZTkyMjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9</a></li>
+        <li>How to Use Pandas for Data Cleaning and Preprocessing - freeCodeCamp, accessed September 1, 2025, <a href="https://www.freecodecamp.org/news/data-cleaning-and-preprocessing-with-pandasbdvhj/">https://www.freecodecamp.org/news/data-cleaning-and-preprocessing-with-pandasbdvhj/</a></li>
+        <li>Data Cleaning in Python: How to Handle Missing Values, Outliers & More | by Aditi Babu, accessed September 1, 2025, <a href="https://medium.com/@aditib259/data-cleaning-in-python-how-to-handle-missing-values-outliers-more-8f8b68b12436">https://medium.com/@aditib259/data-cleaning-in-python-how-to-handle-missing-values-outliers-more-8f8b68b12436</a></li>
+        <li>Predicting a Stroke - Kaggle, accessed September 1, 2025, <a href="https://www.kaggle.com/code/joshuaswords/predicting-a-stroke-shap-lime-explainer-eli5">https://www.kaggle.com/code/joshuaswords/predicting-a-stroke-shap-lime-explainer-eli5</a></li>
+        <li>Intro to dbt for Healthcare | The Tuva Project, accessed September 1, 2025, <a href="https://www.thetuvaproject.com/blog/intro-dbt-for-healthcare">https://www.thetuvaproject.com/blog/intro-dbt-for-healthcare</a></li>
+        <li>Intermediate: Purpose-built transformation steps | dbt Developer Hub, accessed September 1, 2025, <a href="https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate">https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate</a></li>
+        <li>Let's Build a Data Quality Checker in Python (Step-by-Step Tutorial) - YouTube, accessed September 1, 2025, <a href="https://www.youtube.com/watch?v=1kpZQpoxCWI">https://www.youtube.com/watch?v=1kpZQpoxCWI</a></li>
+        <li>Concept | Data quality rules - Dataiku Knowledge Base, accessed September 1, 2025, <a href="https://knowledge.dataiku.com/latest/automation/data-quality/concept-data-quality.html">https://knowledge.dataiku.com/latest/automation/data-quality/concept-data-quality.html</a></li>
+        <li>Quickstart for GitHub Actions, accessed September 1, 2025, <a href="https://docs.github.com/en/actions/get-started/quickstart">https://docs.github.com/en/actions/get-started/quickstart</a></li>
+        <li>Integrating with GitHub Actions – CI/CD pipeline to deploy a Web App to Amazon EC2, accessed September 1, 2025, <a href="https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/">https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/</a></li>
+    </ul>
+
+</div>
+
+</body>
+</html>

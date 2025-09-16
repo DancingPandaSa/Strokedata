@@ -1,0 +1,10 @@
+gender,smoking_status,total_count,stroke_count,stroke_rate_pct
+Female,"formerly smoked",477,34,7.13
+Female,"never smoked",1229,63,5.13
+Female,smokes,452,19,4.20
+Female,Unknown,829,25,3.02
+Male,"formerly smoked",407,36,8.85
+Male,"never smoked",663,27,4.07
+Male,smokes,337,23,6.82
+Male,Unknown,695,22,3.17
+Other,"formerly smoked",1,0,0.00

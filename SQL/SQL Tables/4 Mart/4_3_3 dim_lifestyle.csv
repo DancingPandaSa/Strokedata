@@ -1,0 +1,1001 @@
+lifestyle_key,ever_married,work_type,residence_type,smoking_status
+67,No,Private,Urban,"formerly smoked"
+77,No,children,Rural,Unknown
+84,Yes,Private,Urban,"never smoked"
+91,No,Private,Urban,"never smoked"
+99,No,Private,Urban,Unknown
+121,Yes,Private,Urban,Unknown
+129,No,Private,Urban,"never smoked"
+132,Yes,Govt_job,Urban,Unknown
+156,Yes,Private,Rural,"never smoked"
+163,No,Private,Rural,Unknown
+170,Yes,Govt_job,Rural,"never smoked"
+172,No,children,Urban,Unknown
+187,No,Private,Rural,smokes
+205,Yes,Private,Rural,Unknown
+210,Yes,Self-employed,Rural,"never smoked"
+224,No,Private,Urban,"never smoked"
+239,Yes,Private,Rural,"formerly smoked"
+242,No,children,Urban,Unknown
+247,No,Private,Urban,"never smoked"
+259,Yes,Private,Urban,"never smoked"
+298,Yes,Self-employed,Rural,Unknown
+315,Yes,Private,Rural,"never smoked"
+321,No,Self-employed,Rural,"never smoked"
+338,Yes,Private,Rural,"never smoked"
+347,No,Private,Urban,Unknown
+354,Yes,Private,Urban,smokes
+355,No,children,Rural,Unknown
+364,Yes,Private,Urban,"formerly smoked"
+365,Yes,Private,Rural,"never smoked"
+394,Yes,Self-employed,Rural,"never smoked"
+448,Yes,Private,Rural,Unknown
+452,Yes,Private,Urban,smokes
+458,Yes,Govt_job,Urban,smokes
+464,Yes,Private,Rural,"never smoked"
+479,Yes,Private,Rural,"formerly smoked"
+491,Yes,Self-employed,Urban,"never smoked"
+507,Yes,Private,Rural,smokes
+530,No,children,Rural,Unknown
+533,No,children,Rural,Unknown
+542,No,children,Urban,Unknown
+545,Yes,Private,Rural,"never smoked"
+559,Yes,Private,Urban,"formerly smoked"
+563,Yes,Private,Rural,"never smoked"
+575,No,children,Rural,Unknown
+579,No,children,Urban,Unknown
+587,No,children,Rural,Unknown
+621,Yes,Private,Rural,smokes
+641,Yes,Govt_job,Rural,smokes
+711,Yes,Private,Rural,"never smoked"
+712,No,Private,Rural,"formerly smoked"
+721,Yes,Self-employed,Urban,"formerly smoked"
+724,No,Private,Rural,"never smoked"
+727,Yes,Private,Rural,smokes
+728,No,children,Urban,Unknown
+737,No,children,Urban,Unknown
+739,Yes,Self-employed,Rural,"formerly smoked"
+742,No,Govt_job,Rural,"never smoked"
+751,No,children,Rural,Unknown
+760,No,children,Urban,Unknown
+768,Yes,Self-employed,Urban,"formerly smoked"
+782,No,Private,Urban,"formerly smoked"
+808,No,Private,Rural,"never smoked"
+809,No,children,Urban,Unknown
+820,Yes,Private,Rural,"never smoked"
+841,Yes,Private,Urban,"never smoked"
+844,Yes,Private,Urban,smokes
+875,No,Private,Urban,"never smoked"
+887,No,Private,Urban,"formerly smoked"
+897,No,children,Rural,Unknown
+917,Yes,Private,Urban,smokes
+924,Yes,Govt_job,Urban,smokes
+937,No,children,Urban,Unknown
+949,No,Private,Rural,"never smoked"
+954,No,Private,Rural,"never smoked"
+966,Yes,Self-employed,Rural,"never smoked"
+967,Yes,Private,Urban,"never smoked"
+1077,Yes,Govt_job,Rural,Unknown
+1099,No,children,Rural,Unknown
+1112,No,Private,Urban,"never smoked"
+1116,No,Govt_job,Rural,"never smoked"
+1119,Yes,Govt_job,Urban,smokes
+1151,Yes,Self-employed,Urban,"formerly smoked"
+1164,No,Private,Rural,smokes
+1183,Yes,Private,Rural,smokes
+1191,Yes,Private,Urban,"formerly smoked"
+1192,No,Govt_job,Rural,"never smoked"
+1210,Yes,Private,Rural,Unknown
+1213,Yes,Self-employed,Urban,"formerly smoked"
+1218,No,Private,Urban,"formerly smoked"
+1225,Yes,Private,Urban,"formerly smoked"
+1231,Yes,Govt_job,Rural,Unknown
+1246,Yes,Govt_job,Rural,"never smoked"
+1260,Yes,Govt_job,Urban,"never smoked"
+1261,Yes,Private,Urban,"never smoked"
+1275,No,children,Urban,Unknown
+1301,No,Self-employed,Urban,"never smoked"
+1307,Yes,Private,Rural,smokes
+1323,Yes,Private,Rural,"never smoked"
+1329,No,Govt_job,Rural,"never smoked"
+1405,No,children,Urban,Unknown
+1451,No,Private,Urban,Unknown
+1454,No,Private,Urban,"never smoked"
+1460,Yes,Private,Urban,Unknown
+1473,Yes,Private,Urban,smokes
+1486,Yes,Private,Rural,Unknown
+1499,Yes,Govt_job,Rural,"never smoked"
+1503,No,Private,Urban,smokes
+1505,Yes,Self-employed,Rural,"formerly smoked"
+1506,No,Govt_job,Urban,smokes
+1534,Yes,Private,Rural,smokes
+1552,Yes,Private,Urban,"never smoked"
+1577,No,Private,Urban,Unknown
+1625,No,children,Urban,Unknown
+1656,Yes,Private,Urban,"never smoked"
+1665,Yes,Self-employed,Rural,"never smoked"
+1666,Yes,Govt_job,Urban,"formerly smoked"
+1678,Yes,Private,Rural,"never smoked"
+1679,Yes,Private,Rural,"formerly smoked"
+1681,No,Private,Urban,smokes
+1686,No,Private,Urban,"never smoked"
+1696,Yes,Private,Urban,smokes
+1703,Yes,Private,Urban,"formerly smoked"
+1731,No,Self-employed,Urban,"never smoked"
+1737,No,Private,Rural,"never smoked"
+1741,Yes,Private,Urban,"formerly smoked"
+1772,Yes,Govt_job,Urban,"never smoked"
+1818,No,Govt_job,Urban,smokes
+1821,Yes,Private,Urban,"never smoked"
+1825,Yes,Self-employed,Urban,smokes
+1836,Yes,Private,Urban,"never smoked"
+1842,Yes,Private,Urban,Unknown
+1845,Yes,Private,Urban,"formerly smoked"
+1847,No,Govt_job,Rural,"never smoked"
+1893,Yes,Private,Urban,"formerly smoked"
+1924,Yes,Private,Rural,"never smoked"
+1953,No,children,Rural,Unknown
+1989,Yes,Private,Rural,smokes
+2005,Yes,Self-employed,Urban,"formerly smoked"
+2013,No,Private,Rural,"never smoked"
+2019,No,Private,Rural,Unknown
+2029,Yes,Private,Rural,"never smoked"
+2044,Yes,Self-employed,Rural,Unknown
+2070,Yes,Private,Urban,smokes
+2082,Yes,Private,Rural,"formerly smoked"
+2092,Yes,Private,Rural,"never smoked"
+2109,No,children,Urban,Unknown
+2138,Yes,Govt_job,Urban,"never smoked"
+2182,Yes,Self-employed,Rural,"formerly smoked"
+2209,Yes,Govt_job,Urban,smokes
+2218,Yes,Private,Rural,smokes
+2244,Yes,Private,Urban,"never smoked"
+2265,Yes,Private,Rural,smokes
+2267,Yes,Self-employed,Urban,"never smoked"
+2275,Yes,Private,Urban,smokes
+2291,Yes,Self-employed,Urban,Unknown
+2296,Yes,Self-employed,Urban,Unknown
+2304,Yes,Govt_job,Rural,smokes
+2313,Yes,Self-employed,Urban,smokes
+2314,Yes,Private,Urban,smokes
+2326,Yes,Private,Rural,"formerly smoked"
+2327,No,Private,Rural,Unknown
+2346,Yes,Private,Urban,smokes
+2374,Yes,Private,Rural,"never smoked"
+2390,Yes,Self-employed,Urban,"never smoked"
+2393,Yes,Private,Rural,"formerly smoked"
+2421,Yes,Private,Urban,"never smoked"
+2424,Yes,Private,Urban,Unknown
+2447,Yes,Private,Urban,"formerly smoked"
+2454,No,children,Rural,Unknown
+2456,Yes,Govt_job,Rural,smokes
+2457,Yes,Self-employed,Rural,"formerly smoked"
+2458,Yes,Private,Rural,"never smoked"
+2467,Yes,Self-employed,Rural,"never smoked"
+2513,Yes,Govt_job,Urban,"formerly smoked"
+2520,Yes,Private,Rural,"never smoked"
+2532,No,Private,Rural,Unknown
+2538,No,children,Rural,Unknown
+2543,Yes,Private,Rural,"never smoked"
+2544,Yes,Private,Urban,"formerly smoked"
+2548,Yes,Self-employed,Urban,"never smoked"
+2549,No,Private,Rural,"never smoked"
+2550,Yes,Govt_job,Rural,"formerly smoked"
+2573,Yes,Govt_job,Rural,Unknown
+2578,No,Govt_job,Rural,"never smoked"
+2579,Yes,Self-employed,Rural,Unknown
+2580,No,Govt_job,Urban,"never smoked"
+2633,Yes,Private,Rural,"never smoked"
+2647,Yes,Private,Rural,smokes
+2692,Yes,Self-employed,Urban,"never smoked"
+2702,Yes,Private,Rural,Unknown
+2707,No,children,Rural,Unknown
+2730,Yes,Private,Urban,"never smoked"
+2750,Yes,Self-employed,Rural,Unknown
+2751,Yes,Govt_job,Urban,smokes
+2772,Yes,Private,Urban,Unknown
+2814,No,Govt_job,Urban,"never smoked"
+2818,No,Self-employed,Rural,"formerly smoked"
+2822,Yes,Private,Rural,"never smoked"
+2824,Yes,Govt_job,Urban,"never smoked"
+2846,Yes,Private,Rural,"formerly smoked"
+2849,Yes,Private,Urban,Unknown
+2860,Yes,Private,Rural,Unknown
+2868,Yes,Govt_job,Rural,Unknown
+2877,Yes,Private,Urban,smokes
+2879,No,Self-employed,Urban,"never smoked"
+2885,Yes,Private,Rural,Unknown
+2893,No,children,Rural,Unknown
+2898,Yes,Private,Urban,"never smoked"
+2903,No,Private,Rural,"never smoked"
+2919,No,Private,Rural,Unknown
+2952,Yes,Private,Rural,"never smoked"
+2953,Yes,Private,Rural,smokes
+2972,No,Govt_job,Rural,"formerly smoked"
+2982,Yes,Private,Rural,"never smoked"
+3003,Yes,Govt_job,Rural,"never smoked"
+3009,Yes,Self-employed,Rural,Unknown
+3013,Yes,Self-employed,Rural,"never smoked"
+3045,Yes,Private,Urban,"never smoked"
+3062,Yes,Self-employed,Rural,"never smoked"
+3094,No,Private,Urban,Unknown
+3099,No,Private,Urban,Unknown
+3113,No,Private,Rural,"formerly smoked"
+3115,No,children,Urban,Unknown
+3130,Yes,Private,Rural,"never smoked"
+3135,No,Self-employed,Rural,"never smoked"
+3154,Yes,Self-employed,Rural,"formerly smoked"
+3167,Yes,Private,Urban,"formerly smoked"
+3178,Yes,Private,Rural,"formerly smoked"
+3180,Yes,Govt_job,Urban,"never smoked"
+3184,Yes,Private,Urban,"formerly smoked"
+3205,Yes,Self-employed,Urban,Unknown
+3251,Yes,Private,Urban,"formerly smoked"
+3253,Yes,Private,Rural,smokes
+3305,Yes,Private,Urban,smokes
+3318,No,Private,Rural,smokes
+3325,Yes,Self-employed,Rural,smokes
+3348,Yes,Private,Urban,"never smoked"
+3352,Yes,Self-employed,Urban,"formerly smoked"
+3355,Yes,Private,Urban,"never smoked"
+3361,Yes,Govt_job,Rural,"never smoked"
+3370,Yes,Private,Rural,Unknown
+3379,Yes,Private,Urban,Unknown
+3390,Yes,Private,Rural,"never smoked"
+3428,Yes,Self-employed,Urban,"never smoked"
+3429,No,Govt_job,Urban,Unknown
+3437,No,Private,Urban,smokes
+3442,No,Self-employed,Rural,Unknown
+3477,No,Private,Rural,"never smoked"
+3494,Yes,Private,Rural,Unknown
+3509,Yes,Private,Urban,"never smoked"
+3512,Yes,Self-employed,Urban,"formerly smoked"
+3531,Yes,Private,Rural,"formerly smoked"
+3532,Yes,Private,Urban,"formerly smoked"
+3553,Yes,Govt_job,Urban,smokes
+3579,Yes,Private,Urban,"formerly smoked"
+3590,No,Private,Rural,"never smoked"
+3591,Yes,Private,Rural,"never smoked"
+3595,Yes,Private,Urban,smokes
+3606,No,children,Urban,Unknown
+3609,Yes,Private,Urban,"never smoked"
+3612,Yes,Private,Rural,"formerly smoked"
+3623,Yes,Self-employed,Urban,"never smoked"
+3640,No,Self-employed,Rural,Unknown
+3655,Yes,Govt_job,Rural,"formerly smoked"
+3668,Yes,Govt_job,Urban,smokes
+3673,Yes,Private,Rural,smokes
+3700,Yes,Private,Urban,smokes
+3701,No,children,Urban,Unknown
+3715,Yes,Private,Rural,Unknown
+3718,Yes,Govt_job,Urban,smokes
+3720,No,children,Rural,Unknown
+3724,Yes,Govt_job,Urban,"never smoked"
+3726,No,Private,Urban,Unknown
+3746,Yes,Private,Urban,"never smoked"
+3753,Yes,Private,Urban,Unknown
+3761,Yes,Self-employed,Rural,"never smoked"
+3777,Yes,Govt_job,Rural,"never smoked"
+3793,No,Private,Urban,"never smoked"
+3803,Yes,Private,Urban,smokes
+3807,No,children,Urban,Unknown
+3816,Yes,Private,Rural,"formerly smoked"
+3842,Yes,Private,Rural,"formerly smoked"
+3843,No,Private,Urban,"never smoked"
+3879,No,Private,Urban,smokes
+3942,Yes,Private,Urban,"never smoked"
+3946,Yes,Private,Urban,"never smoked"
+3956,No,children,Urban,Unknown
+3980,No,Private,Rural,"never smoked"
+3984,Yes,Private,Rural,"never smoked"
+4057,Yes,Private,Urban,"formerly smoked"
+4062,Yes,Private,Rural,smokes
+4077,Yes,Private,Urban,Unknown
+4083,No,Private,Rural,"never smoked"
+4099,No,Private,Urban,Unknown
+4117,Yes,Self-employed,Rural,"never smoked"
+4128,Yes,Private,Rural,"formerly smoked"
+4148,Yes,Self-employed,Urban,"formerly smoked"
+4169,No,Private,Rural,"never smoked"
+4174,Yes,Private,Urban,"never smoked"
+4211,No,Govt_job,Rural,smokes
+4213,No,Self-employed,Rural,"formerly smoked"
+4219,Yes,Private,Urban,"formerly smoked"
+4280,Yes,Govt_job,Rural,"never smoked"
+4297,Yes,Govt_job,Urban,"never smoked"
+4309,Yes,Private,Rural,Unknown
+4383,Yes,Govt_job,Urban,"formerly smoked"
+4400,Yes,Private,Urban,"never smoked"
+4403,Yes,Private,Urban,"never smoked"
+4449,Yes,Govt_job,Rural,smokes
+4480,Yes,Private,Rural,"formerly smoked"
+4498,Yes,Private,Urban,"formerly smoked"
+4528,No,Private,Rural,"never smoked"
+4538,No,Private,Urban,"formerly smoked"
+4542,Yes,Govt_job,Urban,Unknown
+4559,No,Private,Rural,Unknown
+4591,Yes,Self-employed,Rural,"never smoked"
+4607,Yes,Self-employed,Urban,Unknown
+4627,No,Private,Urban,"formerly smoked"
+4630,Yes,Private,Rural,"never smoked"
+4631,Yes,Private,Urban,Unknown
+4635,Yes,Private,Rural,"never smoked"
+4639,Yes,Govt_job,Urban,"never smoked"
+4651,Yes,Private,Rural,"formerly smoked"
+4655,Yes,Private,Urban,"never smoked"
+4671,No,Private,Urban,"never smoked"
+4679,Yes,Private,Rural,smokes
+4683,No,Private,Urban,"never smoked"
+4692,Yes,Govt_job,Urban,"never smoked"
+4699,No,Govt_job,Rural,"formerly smoked"
+4702,No,children,Rural,Unknown
+4707,Yes,Private,Urban,Unknown
+4709,Yes,Private,Rural,Unknown
+4712,Yes,Self-employed,Rural,Unknown
+4727,Yes,Govt_job,Rural,"formerly smoked"
+4740,No,Private,Urban,"never smoked"
+4750,Yes,Private,Urban,"formerly smoked"
+4753,Yes,Self-employed,Urban,"formerly smoked"
+4789,No,children,Rural,Unknown
+4793,Yes,Self-employed,Urban,"formerly smoked"
+4795,No,Private,Rural,Unknown
+4797,Yes,Private,Urban,Unknown
+4807,No,Private,Urban,smokes
+4808,Yes,Self-employed,Urban,"formerly smoked"
+4813,No,Private,Urban,"never smoked"
+4833,No,children,Rural,smokes
+4838,Yes,Govt_job,Urban,"never smoked"
+4842,No,Self-employed,Urban,"formerly smoked"
+4850,Yes,Private,Rural,"never smoked"
+4861,Yes,Private,Urban,smokes
+4913,Yes,Private,Rural,"never smoked"
+4929,No,children,Urban,Unknown
+4948,Yes,Self-employed,Rural,smokes
+4949,Yes,Private,Rural,"never smoked"
+4959,No,children,Urban,Unknown
+4961,Yes,Govt_job,Urban,Unknown
+4964,Yes,Private,Rural,"never smoked"
+4970,Yes,Self-employed,Rural,"formerly smoked"
+5006,Yes,Self-employed,Rural,"never smoked"
+5010,No,children,Rural,Unknown
+5032,Yes,Private,Rural,"formerly smoked"
+5043,Yes,Private,Urban,"never smoked"
+5046,No,Self-employed,Urban,Unknown
+5068,No,Private,Urban,smokes
+5074,No,Private,Rural,smokes
+5077,Yes,Private,Urban,Unknown
+5103,Yes,Private,Rural,"formerly smoked"
+5111,Yes,Govt_job,Urban,"never smoked"
+5121,Yes,Private,Urban,Unknown
+5131,Yes,Private,Urban,Unknown
+5137,Yes,Self-employed,Rural,"formerly smoked"
+5157,Yes,Self-employed,Urban,smokes
+5170,Yes,Govt_job,Rural,Unknown
+5173,No,Private,Rural,smokes
+5223,No,Private,Rural,Unknown
+5236,Yes,Private,Rural,"never smoked"
+5286,Yes,Govt_job,Urban,"never smoked"
+5288,No,children,Urban,Unknown
+5294,Yes,Private,Rural,Unknown
+5296,No,Private,Urban,"never smoked"
+5317,Yes,Private,Urban,"never smoked"
+5319,Yes,Private,Rural,"never smoked"
+5350,Yes,Private,Rural,"never smoked"
+5353,No,Private,Rural,smokes
+5355,Yes,Govt_job,Rural,"formerly smoked"
+5374,No,Private,Rural,"never smoked"
+5380,Yes,Private,Urban,"never smoked"
+5387,No,Private,Rural,"never smoked"
+5447,No,Private,Rural,Unknown
+5451,Yes,Private,Rural,"formerly smoked"
+5455,Yes,Private,Rural,Unknown
+5464,Yes,Private,Rural,Unknown
+5475,Yes,Private,Rural,Unknown
+5477,Yes,Self-employed,Urban,"never smoked"
+5478,Yes,Self-employed,Urban,smokes
+5496,Yes,Private,Urban,"never smoked"
+5500,Yes,Govt_job,Urban,smokes
+5505,Yes,Private,Urban,"never smoked"
+5511,Yes,Self-employed,Urban,"formerly smoked"
+5545,Yes,Self-employed,Urban,"formerly smoked"
+5563,Yes,Private,Urban,"never smoked"
+5581,Yes,Private,Rural,"formerly smoked"
+5646,No,children,Rural,Unknown
+5647,No,Private,Urban,"formerly smoked"
+5654,No,children,Rural,Unknown
+5655,No,children,Urban,Unknown
+5681,Yes,Private,Rural,smokes
+5684,No,Private,Urban,"formerly smoked"
+5686,Yes,Private,Urban,Unknown
+5694,No,Private,Rural,"never smoked"
+5708,No,Private,Urban,"never smoked"
+5714,Yes,Govt_job,Rural,"never smoked"
+5723,Yes,Private,Urban,"never smoked"
+5731,Yes,Private,Urban,smokes
+5774,Yes,Private,Urban,Unknown
+5777,Yes,Private,Urban,Unknown
+5780,Yes,Private,Urban,"never smoked"
+5799,Yes,Private,Rural,"formerly smoked"
+5821,Yes,Private,Rural,Unknown
+5824,Yes,Private,Rural,"formerly smoked"
+5834,No,Govt_job,Urban,smokes
+5835,Yes,Private,Urban,Unknown
+5841,No,Private,Urban,"never smoked"
+5858,No,Private,Rural,"never smoked"
+5863,Yes,Private,Urban,"never smoked"
+5875,Yes,Private,Urban,smokes
+5878,Yes,Private,Urban,smokes
+5892,Yes,Private,Rural,"never smoked"
+5927,No,children,Rural,Unknown
+5934,Yes,Private,Urban,"never smoked"
+5951,No,Private,Urban,smokes
+5964,Yes,Private,Urban,Unknown
+5973,Yes,Private,Urban,smokes
+5984,Yes,Private,Rural,smokes
+5987,Yes,Private,Urban,"never smoked"
+6011,No,children,Urban,Unknown
+6019,Yes,Private,Urban,"never smoked"
+6032,Yes,Self-employed,Urban,Unknown
+6034,Yes,Self-employed,Rural,Unknown
+6040,No,Private,Rural,Unknown
+6044,No,Govt_job,Rural,"never smoked"
+6048,Yes,Private,Urban,"never smoked"
+6049,No,children,Rural,Unknown
+6072,Yes,Private,Urban,"never smoked"
+6090,Yes,Private,Urban,"never smoked"
+6104,No,children,Rural,Unknown
+6107,No,children,Urban,Unknown
+6118,Yes,Private,Urban,"formerly smoked"
+6128,No,children,Rural,Unknown
+6132,No,children,Urban,Unknown
+6171,No,children,Urban,Unknown
+6172,Yes,Private,Rural,smokes
+6174,No,Private,Urban,"never smoked"
+6199,Yes,Govt_job,Rural,Unknown
+6202,No,children,Urban,Unknown
+6206,Yes,Self-employed,Rural,Unknown
+6233,Yes,Self-employed,Rural,smokes
+6239,No,Private,Rural,"never smoked"
+6264,Yes,Private,Rural,Unknown
+6278,No,children,Urban,Unknown
+6289,No,children,Urban,Unknown
+6295,Yes,Govt_job,Urban,smokes
+6304,Yes,Self-employed,Urban,"never smoked"
+6319,Yes,Private,Urban,Unknown
+6324,Yes,Private,Rural,"formerly smoked"
+6355,No,children,Rural,Unknown
+6368,Yes,Private,Urban,"formerly smoked"
+6369,Yes,Private,Rural,"never smoked"
+6372,Yes,Private,Urban,"never smoked"
+6390,No,children,Rural,Unknown
+6419,No,Private,Rural,"never smoked"
+6422,Yes,Self-employed,Urban,Unknown
+6443,Yes,Private,Urban,smokes
+6472,Yes,Govt_job,Urban,smokes
+6480,No,Govt_job,Urban,"never smoked"
+6493,No,Private,Urban,smokes
+6517,Yes,Govt_job,Urban,smokes
+6528,Yes,Govt_job,Urban,"formerly smoked"
+6529,No,Private,Urban,"never smoked"
+6537,Yes,Self-employed,Urban,"never smoked"
+6540,Yes,Private,Rural,Unknown
+6563,No,Private,Rural,"never smoked"
+6574,Yes,Self-employed,Urban,"never smoked"
+6576,Yes,Private,Urban,"formerly smoked"
+6596,No,children,Rural,Unknown
+6599,Yes,Self-employed,Rural,"never smoked"
+6605,Yes,Govt_job,Urban,"formerly smoked"
+6606,Yes,Private,Urban,"never smoked"
+6613,No,children,Urban,Unknown
+6625,Yes,Self-employed,Urban,smokes
+6639,No,children,Rural,Unknown
+6665,Yes,Private,Rural,Unknown
+6672,Yes,Private,Urban,"never smoked"
+6726,Yes,Private,Urban,"never smoked"
+6731,No,Private,Rural,"formerly smoked"
+6793,Yes,Private,Rural,"formerly smoked"
+6802,Yes,Private,Urban,Unknown
+6805,No,Private,Urban,Unknown
+6827,Yes,Private,Urban,"never smoked"
+6844,Yes,Private,Urban,"never smoked"
+6850,No,children,Urban,Unknown
+6852,Yes,Self-employed,Rural,"never smoked"
+6855,Yes,Self-employed,Urban,"formerly smoked"
+6879,No,Govt_job,Urban,smokes
+6886,No,Private,Rural,"never smoked"
+6903,No,children,Rural,Unknown
+6924,Yes,Private,Rural,smokes
+6928,Yes,Private,Rural,"never smoked"
+6948,No,children,Urban,Unknown
+6960,No,Govt_job,Urban,Unknown
+6965,No,Private,Rural,"never smoked"
+6968,No,children,Rural,Unknown
+6973,No,children,Rural,Unknown
+6976,Yes,Private,Urban,"never smoked"
+6988,Yes,Self-employed,Urban,"never smoked"
+7003,Yes,Private,Rural,"never smoked"
+7047,Yes,Private,Rural,smokes
+7054,No,children,Rural,Unknown
+7055,Yes,Private,Urban,Unknown
+7057,No,children,Urban,Unknown
+7069,Yes,Private,Rural,"formerly smoked"
+7092,Yes,Private,Rural,"never smoked"
+7122,No,Private,Rural,Unknown
+7129,No,children,Urban,Unknown
+7167,No,Private,Rural,"never smoked"
+7171,Yes,Govt_job,Urban,Unknown
+7195,No,Private,Urban,"never smoked"
+7218,Yes,Private,Rural,"never smoked"
+7222,Yes,Self-employed,Urban,"formerly smoked"
+7230,Yes,Govt_job,Rural,"never smoked"
+7233,No,children,Rural,Unknown
+7250,No,Private,Rural,Unknown
+7273,Yes,Self-employed,Urban,smokes
+7282,Yes,Private,Rural,"never smoked"
+7291,No,Private,Urban,"formerly smoked"
+7293,Yes,Private,Rural,smokes
+7297,No,children,Rural,Unknown
+7298,Yes,Self-employed,Rural,"never smoked"
+7344,Yes,Govt_job,Rural,"never smoked"
+7351,No,Private,Urban,"never smoked"
+7356,Yes,Private,Urban,Unknown
+7371,Yes,Self-employed,Rural,"never smoked"
+7384,No,Self-employed,Rural,Unknown
+7387,Yes,Private,Rural,"never smoked"
+7394,No,Private,Rural,"never smoked"
+7403,Yes,Private,Urban,Unknown
+7411,Yes,Private,Urban,"formerly smoked"
+7446,Yes,Private,Urban,"never smoked"
+7453,Yes,Private,Urban,smokes
+7476,No,Govt_job,Rural,"never smoked"
+7516,Yes,Self-employed,Urban,"never smoked"
+7524,Yes,Private,Urban,"never smoked"
+7529,Yes,Private,Rural,"formerly smoked"
+7538,Yes,Self-employed,Rural,smokes
+7547,Yes,Private,Urban,smokes
+7550,Yes,Private,Rural,Unknown
+7559,No,children,Urban,Unknown
+7564,Yes,Private,Rural,"formerly smoked"
+7577,No,children,Urban,Unknown
+7581,No,children,Urban,Unknown
+7586,No,Self-employed,Rural,"formerly smoked"
+7621,Yes,Private,Rural,Unknown
+7638,Yes,Private,Urban,"formerly smoked"
+7653,No,Private,Urban,Unknown
+7658,Yes,Govt_job,Rural,"formerly smoked"
+7663,No,Govt_job,Rural,"formerly smoked"
+7665,Yes,Private,Rural,Unknown
+7683,Yes,Self-employed,Rural,smokes
+7696,No,Private,Urban,smokes
+7700,Yes,Private,Urban,"never smoked"
+7725,Yes,Private,Urban,"formerly smoked"
+7730,No,Private,Rural,smokes
+7745,Yes,Private,Urban,"formerly smoked"
+7754,Yes,Self-employed,Rural,"formerly smoked"
+7780,Yes,Self-employed,Urban,"never smoked"
+7789,Yes,Private,Urban,"never smoked"
+7799,No,Self-employed,Urban,"never smoked"
+7806,Yes,Private,Urban,smokes
+7828,Yes,Self-employed,Urban,smokes
+7841,Yes,Private,Urban,"never smoked"
+7859,Yes,Private,Urban,smokes
+7868,No,children,Rural,"never smoked"
+7871,Yes,Private,Urban,smokes
+7885,No,Private,Rural,Unknown
+7892,Yes,Private,Urban,"formerly smoked"
+7924,Yes,Private,Urban,"formerly smoked"
+7937,Yes,Govt_job,Urban,smokes
+7953,Yes,Private,Rural,"never smoked"
+7964,No,Private,Urban,"formerly smoked"
+7979,No,Private,Rural,"never smoked"
+7990,Yes,Private,Rural,Unknown
+8003,No,Private,Urban,Unknown
+8008,No,Govt_job,Urban,smokes
+8009,Yes,Private,Urban,"formerly smoked"
+8022,No,Private,Urban,"never smoked"
+8031,Yes,Self-employed,Rural,smokes
+8037,No,Govt_job,Urban,Unknown
+8041,No,children,Rural,Unknown
+8045,Yes,Private,Urban,"never smoked"
+8050,No,children,Urban,Unknown
+8085,No,Private,Rural,smokes
+8096,Yes,Private,Urban,smokes
+8106,Yes,Private,Rural,smokes
+8111,No,Private,Rural,Unknown
+8117,Yes,Private,Rural,"formerly smoked"
+8122,Yes,Private,Urban,Unknown
+8145,No,Private,Urban,smokes
+8154,Yes,Govt_job,Urban,"formerly smoked"
+8168,Yes,Private,Rural,"formerly smoked"
+8171,No,children,Rural,Unknown
+8175,No,Private,Urban,"never smoked"
+8203,No,Private,Rural,Unknown
+8208,No,Private,Rural,smokes
+8213,Yes,Private,Urban,Unknown
+8233,Yes,Self-employed,Rural,smokes
+8240,Yes,Private,Urban,smokes
+8264,Yes,Self-employed,Rural,Unknown
+8277,No,children,Urban,Unknown
+8320,No,children,Rural,Unknown
+8328,Yes,Private,Rural,"never smoked"
+8332,Yes,Private,Rural,"formerly smoked"
+8341,No,children,Rural,"never smoked"
+8345,Yes,Private,Rural,"never smoked"
+8385,Yes,Private,Urban,Unknown
+8410,No,children,Rural,Unknown
+8470,Yes,Private,Urban,"never smoked"
+8521,Yes,Private,Rural,"formerly smoked"
+8541,Yes,Govt_job,Rural,"never smoked"
+8543,Yes,Private,Rural,"never smoked"
+8544,No,Self-employed,Rural,"never smoked"
+8553,Yes,Govt_job,Rural,Unknown
+8563,No,children,Rural,Unknown
+8579,No,children,Rural,Unknown
+8580,Yes,Self-employed,Rural,"never smoked"
+8584,No,children,Rural,Unknown
+8595,Yes,Private,Rural,"never smoked"
+8598,Yes,Govt_job,Urban,"never smoked"
+8614,Yes,Self-employed,Urban,"formerly smoked"
+8616,Yes,Private,Rural,smokes
+8623,No,children,Urban,Unknown
+8644,Yes,Private,Rural,"formerly smoked"
+8646,Yes,Private,Rural,"never smoked"
+8655,Yes,Self-employed,Urban,"never smoked"
+8690,Yes,Private,Urban,"never smoked"
+8719,No,children,Urban,"formerly smoked"
+8723,No,Private,Rural,Unknown
+8727,Yes,Self-employed,Urban,"formerly smoked"
+8752,Yes,Govt_job,Urban,"never smoked"
+8760,No,Private,Urban,smokes
+8770,No,Self-employed,Urban,"never smoked"
+8778,Yes,Self-employed,Rural,"formerly smoked"
+8790,No,Private,Urban,Unknown
+8816,Yes,Private,Urban,Unknown
+8819,Yes,Govt_job,Rural,"formerly smoked"
+8831,Yes,Private,Rural,Unknown
+8838,No,Private,Rural,smokes
+8882,No,Govt_job,Rural,"never smoked"
+8884,No,children,Rural,Unknown
+8899,No,Private,Rural,smokes
+8920,Yes,Self-employed,Rural,"formerly smoked"
+8950,No,Private,Urban,"formerly smoked"
+8951,Yes,Self-employed,Urban,"never smoked"
+8960,No,Self-employed,Rural,smokes
+8964,No,Private,Rural,"never smoked"
+8968,Yes,Private,Urban,smokes
+8976,Yes,Private,Rural,"never smoked"
+8983,Yes,Private,Urban,"never smoked"
+9011,Yes,Private,Urban,smokes
+9013,Yes,Private,Rural,"formerly smoked"
+9026,Yes,Self-employed,Urban,"never smoked"
+9034,No,children,Urban,Unknown
+9046,Yes,Private,Urban,"formerly smoked"
+9051,Yes,Private,Urban,"never smoked"
+9076,Yes,Self-employed,Urban,Unknown
+9079,Yes,Self-employed,Urban,"formerly smoked"
+9107,No,children,Rural,Unknown
+9122,Yes,Private,Urban,"never smoked"
+9143,No,Private,Urban,"formerly smoked"
+9160,Yes,Private,Urban,"never smoked"
+9170,Yes,Self-employed,Urban,Unknown
+9179,No,Private,Urban,smokes
+9189,No,Private,Urban,"never smoked"
+9197,No,children,Urban,Unknown
+9199,No,Self-employed,Urban,"formerly smoked"
+9201,Yes,Self-employed,Urban,"never smoked"
+9225,No,children,Rural,Unknown
+9262,Yes,Private,Rural,"never smoked"
+9335,No,Private,Rural,smokes
+9394,No,children,Rural,Unknown
+9404,Yes,Private,Rural,"never smoked"
+9415,Yes,Self-employed,Urban,"formerly smoked"
+9442,Yes,Self-employed,Rural,"never smoked"
+9487,No,Private,Urban,"never smoked"
+9489,Yes,Private,Urban,Unknown
+9511,No,Private,Urban,Unknown
+9565,No,Private,Rural,"never smoked"
+9602,Yes,Private,Urban,Unknown
+9608,No,Private,Urban,"never smoked"
+9612,No,children,Urban,Unknown
+9620,Yes,Govt_job,Rural,"never smoked"
+9637,Yes,Private,Rural,smokes
+9641,Yes,Private,Urban,smokes
+9644,Yes,Private,Urban,"formerly smoked"
+9648,Yes,Private,Urban,"never smoked"
+9696,Yes,Private,Urban,smokes
+9729,Yes,Private,Urban,"never smoked"
+9730,Yes,Private,Urban,"never smoked"
+9731,No,children,Urban,Unknown
+9752,Yes,Govt_job,Rural,smokes
+9866,Yes,Private,Urban,Unknown
+9879,Yes,Private,Urban,Unknown
+9906,No,children,Urban,Unknown
+9912,Yes,Private,Rural,Unknown
+9923,Yes,Private,Urban,"never smoked"
+9926,No,Private,Urban,smokes
+9948,No,children,Urban,Unknown
+9955,No,Private,Urban,"formerly smoked"
+9986,Yes,Private,Urban,Unknown
+9995,No,children,Urban,Unknown
+10018,No,Private,Rural,Unknown
+10055,No,Govt_job,Rural,"formerly smoked"
+10056,Yes,Private,Urban,"never smoked"
+10119,Yes,Private,Rural,"never smoked"
+10133,Yes,Private,Urban,smokes
+10135,No,Private,Rural,Unknown
+10138,Yes,Private,Urban,"formerly smoked"
+10139,Yes,Self-employed,Urban,"never smoked"
+10159,Yes,Private,Urban,"never smoked"
+10166,No,Govt_job,Rural,Unknown
+10238,Yes,Private,Urban,"never smoked"
+10243,Yes,Govt_job,Urban,"never smoked"
+10245,Yes,Self-employed,Rural,"never smoked"
+10255,Yes,Private,Rural,Unknown
+10273,Yes,Private,Rural,Unknown
+10281,Yes,Self-employed,Rural,"never smoked"
+10313,Yes,Private,Urban,"formerly smoked"
+10321,Yes,Private,Rural,Unknown
+10323,Yes,Private,Urban,smokes
+10324,No,children,Urban,Unknown
+10333,Yes,Private,Urban,"never smoked"
+10351,Yes,Private,Urban,"formerly smoked"
+10367,No,children,Rural,Unknown
+10370,Yes,Govt_job,Urban,"formerly smoked"
+10374,Yes,Private,Rural,smokes
+10381,Yes,Self-employed,Urban,"never smoked"
+10390,No,children,Urban,Unknown
+10396,No,Private,Urban,Unknown
+10416,Yes,Private,Urban,smokes
+10434,No,Private,Urban,"never smoked"
+10436,Yes,Private,Rural,"never smoked"
+10445,Yes,Govt_job,Rural,Unknown
+10449,Yes,Private,Urban,"never smoked"
+10460,Yes,Govt_job,Urban,Unknown
+10504,Yes,Govt_job,Rural,"formerly smoked"
+10511,No,children,Urban,Unknown
+10523,Yes,Private,Urban,Unknown
+10538,Yes,Self-employed,Urban,"formerly smoked"
+10541,Yes,Private,Rural,"never smoked"
+10548,Yes,Private,Rural,"formerly smoked"
+10552,Yes,Self-employed,Rural,"never smoked"
+10572,Yes,Private,Rural,"never smoked"
+10584,No,children,Urban,Unknown
+10603,Yes,Private,Rural,Unknown
+10624,Yes,Private,Rural,smokes
+10626,No,Private,Rural,"formerly smoked"
+10636,Yes,Self-employed,Rural,"formerly smoked"
+10649,Yes,Private,Urban,"never smoked"
+10651,Yes,Govt_job,Rural,"formerly smoked"
+10659,No,children,Urban,Unknown
+10696,Yes,Private,Urban,"formerly smoked"
+10710,Yes,Private,Urban,"formerly smoked"
+10716,Yes,Private,Rural,"never smoked"
+10744,Yes,Govt_job,Rural,"never smoked"
+10752,Yes,Private,Rural,"formerly smoked"
+10762,Yes,Private,Rural,Unknown
+10782,No,children,Rural,Unknown
+10792,No,Private,Rural,"formerly smoked"
+10826,Yes,Self-employed,Urban,smokes
+10829,No,Private,Rural,"never smoked"
+10870,Yes,Private,Rural,"never smoked"
+10875,Yes,Private,Rural,"never smoked"
+10886,No,children,Rural,Unknown
+10913,No,children,Urban,"never smoked"
+10924,Yes,Private,Rural,smokes
+10943,Yes,Govt_job,Rural,"formerly smoked"
+10950,No,children,Urban,Unknown
+10973,Yes,Private,Urban,"never smoked"
+10981,No,children,Rural,"never smoked"
+10995,Yes,Private,Rural,"never smoked"
+10997,Yes,Private,Rural,"never smoked"
+11003,Yes,Self-employed,Rural,Unknown
+11014,No,children,Rural,Unknown
+11024,Yes,Private,Rural,"formerly smoked"
+11068,Yes,Self-employed,Urban,Unknown
+11091,Yes,Self-employed,Rural,"never smoked"
+11098,Yes,Govt_job,Rural,"formerly smoked"
+11105,Yes,Private,Urban,"formerly smoked"
+11111,Yes,Govt_job,Urban,"formerly smoked"
+11120,Yes,Private,Urban,"never smoked"
+11134,Yes,Private,Rural,"never smoked"
+11145,No,children,Urban,Unknown
+11148,Yes,Private,Rural,Unknown
+11169,Yes,Private,Urban,"formerly smoked"
+11176,No,children,Rural,Unknown
+11184,Yes,Self-employed,Rural,"never smoked"
+11192,Yes,Private,Rural,smokes
+11208,No,children,Rural,Unknown
+11232,Yes,Private,Rural,"never smoked"
+11238,Yes,Private,Rural,Unknown
+11250,Yes,Self-employed,Rural,"formerly smoked"
+11259,Yes,Private,Urban,"never smoked"
+11280,Yes,Private,Urban,"never smoked"
+11312,Yes,Self-employed,Rural,"formerly smoked"
+11313,Yes,Private,Rural,"never smoked"
+11325,No,children,Rural,"never smoked"
+11327,Yes,Self-employed,Urban,"formerly smoked"
+11382,No,Private,Rural,"never smoked"
+11392,Yes,Private,Rural,smokes
+11394,Yes,Private,Rural,"formerly smoked"
+11412,Yes,Private,Rural,"never smoked"
+11447,Yes,Govt_job,Urban,"never smoked"
+11450,Yes,Self-employed,Urban,"never smoked"
+11539,No,Private,Urban,smokes
+11544,Yes,Private,Urban,"never smoked"
+11566,Yes,Private,Rural,Unknown
+11573,No,Private,Rural,smokes
+11577,Yes,Self-employed,Rural,"never smoked"
+11595,No,Private,Urban,"never smoked"
+11605,No,Private,Rural,"never smoked"
+11630,No,Private,Urban,smokes
+11632,Yes,Private,Urban,Unknown
+11651,Yes,Private,Rural,"never smoked"
+11658,No,children,Rural,Unknown
+11691,No,Private,Rural,Unknown
+11692,No,Govt_job,Urban,smokes
+11702,No,Never_worked,Urban,Unknown
+11709,No,Private,Urban,"never smoked"
+11713,Yes,Private,Rural,"formerly smoked"
+11726,Yes,Govt_job,Rural,"formerly smoked"
+11727,Yes,Self-employed,Urban,smokes
+11730,Yes,Govt_job,Rural,"never smoked"
+11743,Yes,Private,Urban,"formerly smoked"
+11744,Yes,Self-employed,Urban,Unknown
+11745,Yes,Private,Urban,"formerly smoked"
+11762,Yes,Private,Urban,Unknown
+11770,Yes,Govt_job,Urban,smokes
+11792,Yes,Private,Urban,"formerly smoked"
+11803,No,Private,Rural,"formerly smoked"
+11816,Yes,Self-employed,Urban,"never smoked"
+11817,Yes,Govt_job,Urban,"formerly smoked"
+11838,Yes,Govt_job,Rural,"never smoked"
+11843,Yes,Self-employed,Rural,"formerly smoked"
+11861,Yes,Self-employed,Rural,"never smoked"
+11872,No,children,Urban,Unknown
+11882,No,Private,Urban,"never smoked"
+11891,No,Govt_job,Urban,"never smoked"
+11898,Yes,Private,Urban,"never smoked"
+11904,No,children,Rural,Unknown
+11908,Yes,Self-employed,Urban,"formerly smoked"
+11933,Yes,Private,Rural,Unknown
+11935,No,children,Rural,Unknown
+11960,Yes,Private,Rural,"never smoked"
+11962,Yes,Private,Urban,"never smoked"
+11969,Yes,Self-employed,Urban,"formerly smoked"
+11973,No,children,Urban,Unknown
+11974,No,children,Urban,Unknown
+11999,Yes,Govt_job,Rural,smokes
+12003,Yes,Private,Rural,"never smoked"
+12015,No,children,Urban,Unknown
+12022,Yes,Govt_job,Urban,smokes
+12037,Yes,Self-employed,Rural,"never smoked"
+12062,Yes,Self-employed,Rural,smokes
+12064,Yes,Private,Rural,Unknown
+12092,No,Private,Rural,"never smoked"
+12095,Yes,Govt_job,Rural,smokes
+12097,Yes,Private,Urban,"never smoked"
+12106,Yes,Govt_job,Rural,"never smoked"
+12109,Yes,Private,Rural,"never smoked"
+12117,No,children,Urban,Unknown
+12134,Yes,Govt_job,Rural,smokes
+12175,Yes,Private,Urban,smokes
+12204,No,Govt_job,Rural,"never smoked"
+12228,No,children,Rural,"never smoked"
+12259,Yes,Private,Urban,"formerly smoked"
+12270,Yes,Govt_job,Rural,"never smoked"
+12279,Yes,Private,Urban,Unknown
+12298,No,Self-employed,Urban,"formerly smoked"
+12318,Yes,Self-employed,Urban,Unknown
+12336,Yes,Self-employed,Urban,"never smoked"
+12345,No,children,Urban,"never smoked"
+12363,Yes,Govt_job,Urban,Unknown
+12366,No,Private,Urban,Unknown
+12367,Yes,Self-employed,Urban,Unknown
+12376,Yes,Govt_job,Urban,"formerly smoked"
+12380,Yes,Govt_job,Rural,"never smoked"
+12396,No,Private,Urban,Unknown
+12414,Yes,Private,Rural,"formerly smoked"
+12436,No,children,Urban,Unknown
+12449,Yes,Private,Rural,Unknown
+12465,No,Private,Rural,"never smoked"
+12469,Yes,Private,Urban,"never smoked"
+12482,Yes,Self-employed,Urban,smokes
+12487,Yes,Private,Urban,smokes
+12512,Yes,Private,Rural,"never smoked"
+12557,No,Self-employed,Urban,"never smoked"
+12593,No,Private,Urban,"never smoked"
+12594,Yes,Private,Rural,smokes
+12600,Yes,Self-employed,Rural,"never smoked"
+12618,Yes,Self-employed,Urban,Unknown
+12662,Yes,Self-employed,Urban,"formerly smoked"
+12668,Yes,Self-employed,Urban,"never smoked"
+12674,Yes,Private,Rural,"formerly smoked"
+12677,Yes,Private,Rural,"never smoked"
+12686,No,Govt_job,Rural,"never smoked"
+12687,No,children,Urban,Unknown
+12689,Yes,Govt_job,Rural,"formerly smoked"
+12693,Yes,Private,Urban,smokes
+12738,Yes,Private,Rural,"never smoked"
+12741,Yes,Private,Rural,"formerly smoked"
+12753,Yes,Private,Urban,"never smoked"
+12786,Yes,Private,Urban,Unknown
+12807,Yes,Private,Urban,"never smoked"
+12812,Yes,Private,Rural,"never smoked"
+12834,Yes,Private,Urban,"formerly smoked"
+12849,Yes,Private,Urban,Unknown
+12857,Yes,Self-employed,Rural,smokes
+12900,No,children,Rural,"never smoked"
+12906,Yes,Self-employed,Rural,"never smoked"
+12911,Yes,Private,Rural,"never smoked"
+12915,Yes,Govt_job,Rural,"never smoked"
+12917,Yes,Private,Urban,smokes
+12963,No,Self-employed,Rural,Unknown
+12982,Yes,Self-employed,Urban,Unknown
+12985,Yes,Self-employed,Rural,"never smoked"
+12990,No,children,Rural,Unknown
+12992,Yes,Private,Rural,"never smoked"
+13031,No,children,Urban,"never smoked"
+13049,Yes,Private,Rural,"never smoked"
+13062,No,Private,Rural,Unknown
+13072,Yes,Self-employed,Urban,"formerly smoked"
+13111,Yes,Private,Rural,smokes
+13116,Yes,Private,Urban,"never smoked"
+13129,Yes,Self-employed,Rural,"never smoked"
+13155,Yes,Govt_job,Rural,"never smoked"
+13171,No,children,Urban,"never smoked"
+13172,Yes,Self-employed,Urban,"never smoked"
+13173,Yes,Private,Urban,"formerly smoked"
+13176,Yes,Private,Urban,"never smoked"
+13191,No,Private,Rural,"never smoked"
+13219,No,children,Urban,Unknown
+13223,Yes,Govt_job,Rural,"never smoked"
+13236,No,children,Rural,Unknown
+13237,Yes,Self-employed,Urban,"never smoked"
+13270,No,Govt_job,Urban,"never smoked"
+13276,Yes,Private,Urban,Unknown
+13286,No,children,Rural,Unknown
+13307,Yes,Govt_job,Urban,"formerly smoked"
+13319,No,children,Rural,Unknown
+13323,No,children,Urban,Unknown
+13328,Yes,Private,Rural,Unknown
+13358,Yes,Self-employed,Rural,"never smoked"
+13365,Yes,Private,Rural,smokes
+13367,Yes,Private,Rural,Unknown
+13374,Yes,Private,Urban,"never smoked"
+13375,Yes,Private,Urban,"never smoked"
+13380,No,children,Urban,Unknown
+13386,Yes,Self-employed,Rural,Unknown
+13398,Yes,Private,Urban,"never smoked"
+13439,Yes,Private,Urban,Unknown
+13440,No,children,Urban,Unknown
+13465,No,Private,Rural,smokes
+13491,Yes,Private,Rural,smokes
+13503,Yes,Self-employed,Urban,"never smoked"
+13504,No,children,Urban,Unknown
+13517,Yes,Private,Urban,"never smoked"
+13529,Yes,Govt_job,Rural,"never smoked"
+13540,Yes,Self-employed,Rural,Unknown
+13547,Yes,Private,Urban,"never smoked"
+13561,Yes,Private,Urban,"formerly smoked"
+13571,Yes,Govt_job,Urban,"never smoked"
+13583,No,children,Rural,Unknown
+13598,Yes,Self-employed,Urban,"formerly smoked"
+13602,Yes,Self-employed,Rural,Unknown
+13620,Yes,Self-employed,Urban,smokes
+13622,No,children,Rural,Unknown
+13629,No,children,Urban,Unknown
+13683,Yes,Private,Urban,"never smoked"
+13723,Yes,Private,Urban,"formerly smoked"
+13728,No,children,Rural,Unknown
+13736,Yes,Private,Urban,"formerly smoked"
+13749,Yes,Private,Rural,"formerly smoked"
+13755,No,children,Rural,Unknown
+13764,Yes,Private,Urban,"never smoked"
+13768,Yes,Private,Urban,Unknown
+13817,No,Private,Urban,Unknown
+13818,Yes,Private,Rural,"never smoked"
+13846,Yes,Govt_job,Rural,"never smoked"
+13859,No,Private,Urban,smokes
+13861,Yes,Self-employed,Urban,"never smoked"
+13862,No,Never_worked,Urban,"never smoked"
+13870,Yes,Private,Urban,smokes

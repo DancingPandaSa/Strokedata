@@ -1,0 +1,5 @@
+bmi_category,stroke_count,total_count,stroke_rate
+underweight,1,323,0.0031
+normal,35,1238,0.0283
+overweight,115,1609,0.0715
+obese,98,1920,0.0510

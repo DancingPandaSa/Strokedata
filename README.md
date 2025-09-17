@@ -1,138 +1,69 @@
-# 🧠 Stroke Prediction Data Pipeline
+# 🧠 腦中風資料分析專案
 
-A full-stack data pipeline project for analyzing and predicting stroke risks using real-world healthcare data.
-
----
-
-## 📊 Project Overview
-
-This project demonstrates an **end-to-end data pipeline** that includes data ingestion, transformation, modeling, quality checks, storage, and visualization using modern data tools and best practices.
-
-- **📦 Data Source**: [Kaggle - Stroke Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset)
-- **🎯 Goal**: Clean and transform healthcare data to analyze and predict stroke risks
-- **🧱 Architecture**: Modular pipeline using Python, MySQL, DBT, and visualization tools
+本專案的目標是透過 **公開資料集 + 臨床模擬資料庫**，進行 **腦中風風險預測** 與 **台灣腦血管疾病死亡趨勢驗證**。  
+專案涵蓋了 **數據管線 (Data Pipeline)**、**資料建模 (Data Modeling)**、**商業智慧 (Power BI)**、以及 **機器學習預測模型 (Machine Learning)**。
 
 ---
 
-## 🧭 System Architecture
+## 📊 專案架構
 
-```text
-資料來源 (Kaggle Dataset)
-        ↓
-ETL (Python / Pandas / SQL)
-        ↓
-資料倉儲 (MySQL)
-        ↓
-數據建模 (DBT: staging / intermediate / mart)
-        ↓
-資料品質監控 (Python rule checks + logs)
-        ↓
-可視化 (Power BI)
-        ↓
-版本控管 + 自動化 (Git + GitHub Actions)
+### 1. 資料管線 (Data Pipeline)
+- **資料來源**：MySQL (模擬醫療資料庫，表名 `strokedata`)
+- **ETL 工具**：`dbt` 進行資料清洗與轉換  
+- **流程設計**：`staging → intermediate → mart`
+- **資料倉儲**：模擬 Snowflake / BigQuery / Postgres
 
-```
+### 2. 資料建模 (Data Modeling)
+- 採用 **星型模型 (Star Schema)**
+- **事實表 (Fact Table)**：`fact_stroke`（紀錄個體是否中風）
+- **維度表 (Dimension Tables)**：
+  - `dim_patient`（性別、年齡、婚姻、居住地）
+  - `dim_health`（高血壓、心臟病、BMI、血糖）
+  - `dim_lifestyle`（職業型態、居住類型、吸菸狀態）
 
----
+### 3. 商業智慧 (Power BI)
+- 製作中風案例的視覺化分析
+- 包含 **性別、年齡、吸菸、BMI、疾病共病** 的影響
+- 👉 [查看 Power BI 報表](https://app.powerbi.com/view?r=eyJrIjoiYTE5NDgzMTYtMmRhZi00ZjhmLWFkYjktZjIwZTY4NzJkOTFhIiwidCI6ImM3ODIzYzk2LWFmNDgtNGJlNC05YmUxLWFhN2I2MDEyMTk5NyIsImMiOjZ9)
 
-## 🛠 Tech Stack
-
-| Stage                   | Tool / Language           |
-|-------------------------|---------------------------|
-| Data Ingestion          | Python, Pandas            |
-| SQL Query Engine        | DuckDB (local analysis)   |
-| Data Warehouse          | MySQL                     |
-| Data Modeling           | DBT                       |
-| Data Quality Monitoring | Python (custom rules)     |
-| Visualization           | Power BI      |
-| CI/CD & Version Control | Git + GitHub Actions      |
+### 4. 機器學習 (Machine Learning)
+- **方法比較**：
+  - Logistic Regression（邏輯迴歸）
+  - Random Forest（隨機森林）
+- **流程設計**：  
+  `資料探索 → 預處理 → 建模 → 評估 → 模型選擇 → 模型解釋 → 外部驗證`
+- **輸出 Demo**：  
+  - GitHub Pages → [中風風險預測 Demo](https://dancingpandasa.github.io/Strokedata/)  
+  - 使用者可輸入 **年齡、性別、BMI、血糖等個人資訊**，系統會計算 **中風風險機率**，並提供與 **台灣腦血管疾病死亡率 (MOHW)** 的趨勢比較。
 
 ---
 
-## 📁 Project Structure
+## 📂 資料來源
 
-```text
-stroke-prediction-pipeline/
-│
-├── data/                            # Raw and cleaned datasets
-│   └── healthcare-dataset-stroke-data.csv
-│
-├── etl/                             # ETL pipeline scripts
-│   └── load_data.py                 # Cleans and loads data into MySQL
-│
-├── dbt/                             # DBT project folder
-│   └── stroke_project/              # Contains DBT models (staging, mart, etc.)
-│
-├── quality_checks/                 # Data validation scripts
-│   └── validate_data.py            # Rule-based quality checks and logging
-│
-├── dashboards/                      # Visualization layer
-│   ├── streamlit_app.py            # Streamlit dashboard app (optional)
-│   └── powerbi_dashboard.pbix      # Power BI dashboard file (optional)
-│
-├── .github/                         # GitHub Actions CI/CD config
-│   └── workflows/
-│       └── etl_ci.yml              # Workflow for automated ETL validation
-│
-├── requirements.txt                # Python dependencies
-└── README.md                       # Project documentation
-```
-## ⚙️ Setup Instructions
+1. [Kaggle – Stroke Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset?resource=download)  
+   國際公開腦中風資料集，包含患者基本屬性與中風標籤。
 
-### 1. Clone Repository
+2. [衛生福利部 111 年國人死因統計 – 腦血管疾病死亡資料](https://dep.mohw.gov.tw/DOS/lp-5069-113-2-20.html)  
+   台灣官方公共衛生資料，用於模型驗證與趨勢比對。
 
-```bash
-git clone https://github.com/yourusername/stroke-prediction-pipeline.git
-cd stroke-prediction-pipeline
-```
-### 2. Install Python Dependencies
 
-Install all required Python libraries using the `requirements.txt` file:
+---
 
-```bash
-pip install -r requirements.txt
+## 🚀 專案亮點
 
-```
-### 3. Load Data into MySQL
+- ✅ 整合 **國際資料集 + 台灣官方統計**  
+- ✅ 建立 **資料管線 & 星型模型**  
+- ✅ 使用 **Power BI** 製作可視化儀表板  
+- ✅ 應用 **機器學習模型** 預測中風風險  
+- ✅ 與 **台灣腦血管疾病死亡率** 進行外部驗證  
 
-Update MySQL credentials in etl/load_data.py, then run:
-```bash
-python etl/load_data.py
-```
-### 4. Run DBT Models
+---
 
-Navigate to the DBT project directory and execute:
-```bash
-cd dbt/stroke_project
-dbt run
-dbt test
-```
-### 5. Start Streamlit Dashboard (Optional)
-streamlit run dashboards/streamlit_app.py
+## 📎 專案展示
 
-## ✅ Key Features
+- Power BI 分析報表 → [點此查看](https://app.powerbi.com/view?r=eyJrIjoiYTE5NDgzMTYtMmRhZi00ZjhmLWFkYjktZjIwZTY4NzJkOTFhIiwidCI6ImM3ODIzYzk2LWFmNDgtNGJlNC05YmUxLWFhN2I2MDEyMTk5NyIsImMiOjZ9)  
+- 機器學習預測 Demo (GitHub Pages) → [點此進入](https://dancingpandasa.github.io/Strokedata/)
+- 專案簡報 Slide → [點此瀏覽](https://dancingpandasa.github.io/Strokedata/Slide.html)
+---
 
-- 🧼 **Data Cleaning** with Pandas  
-  Handle missing values, outlier filtering, gender normalization, and feature encoding (e.g., BMI median fill, gender uppercase trimming).
-
-- 🏗 **DBT Data Models**
-  - `stg_stroke_data` – Raw data staging layer
-  - `int_patient_risk` – Transformed intermediate layer
-  - `mart_stroke_summary` – Final reporting-ready dataset
-
-- 🧪 **Data Validation**  
-  Custom Python checks for:
-  - Null values
-  - Data types
-  - Business rules (e.g., valid age range, bmi > 0, etc.)
-
-- 📊 **Interactive Dashboards**  
-  Visualize key trends and KPIs using:
-  - Power BI (optional)
-
-- 🔁 **CI/CD with GitHub Actions**  
-  Automate data quality checks and ETL validation on every push or pull request.
-
-- 🔒 **Version Control**  
-  Project managed with Git, following modular, reusable, and production-ready folder structure.
 

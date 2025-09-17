@@ -46,11 +46,6 @@
 2. [衛生福利部 111 年國人死因統計 – 腦血管疾病死亡資料](https://dep.mohw.gov.tw/DOS/lp-5069-113-2-20.html)  
    台灣官方公共衛生資料，用於模型驗證與趨勢比對。
 
-3. [Power BI 視覺化報表](https://app.powerbi.com/view?r=eyJrIjoiYTE5NDgzMTYtMmRhZi00ZjhmLWFkYjktZjIwZTY4NzJkOTFhIiwidCI6ImM3ODIzYzk2LWFmNDgtNGJlNC05YmUxLWFhN2I2MDEyMTk5NyIsImMiOjZ9)  
-   探索資料特徵、群組差異、風險因子。
-
-4. [機器學習預測 Demo – GitHub Pages](https://dancingpandasa.github.io/Strokedata/)  
-   使用者輸入個人資訊（年齡、性別、身高、體重、血糖…），即可預測中風機率。
 
 ---
 
@@ -68,7 +63,7 @@
 
 - Power BI 分析報表 → [點此查看](https://app.powerbi.com/view?r=eyJrIjoiYTE5NDgzMTYtMmRhZi00ZjhmLWFkYjktZjIwZTY4NzJkOTFhIiwidCI6ImM3ODIzYzk2LWFmNDgtNGJlNC05YmUxLWFhN2I2MDEyMTk5NyIsImMiOjZ9)  
 - 機器學習預測 Demo (GitHub Pages) → [點此進入](https://dancingpandasa.github.io/Strokedata/)
-
+- 專案簡報 Slide → [點此瀏覽](https://dancingpandasa.github.io/Strokedata/Slide.html)
 ---
 
 

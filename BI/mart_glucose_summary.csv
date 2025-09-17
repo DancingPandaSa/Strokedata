@@ -1,0 +1,6 @@
+glucose_level_category,stroke_count,total_count,stroke_rate
+unknown,1,11,0.0909
+normal,112,3120,0.0359
+pre-diabetic,44,1150,0.0383
+high,36,375,0.0960
+very-high,56,434,0.1290

@@ -1,0 +1,61 @@
+lifestyle_key,ever_married,work_type,residence_type,smoking_status
+1,No,Private,Urban,"formerly smoked"
+2,No,children,Rural,Unknown
+3,Yes,Private,Urban,"never smoked"
+4,No,Private,Urban,"never smoked"
+5,No,Private,Urban,Unknown
+6,Yes,Private,Urban,Unknown
+7,Yes,Govt_job,Urban,Unknown
+8,Yes,Private,Rural,"never smoked"
+9,No,Private,Rural,Unknown
+10,Yes,Govt_job,Rural,"never smoked"
+11,No,children,Urban,Unknown
+12,No,Private,Rural,smokes
+13,Yes,Private,Rural,Unknown
+14,Yes,Self-employed,Rural,"never smoked"
+15,Yes,Private,Rural,"formerly smoked"
+16,Yes,Self-employed,Rural,Unknown
+17,No,Self-employed,Rural,"never smoked"
+18,Yes,Private,Urban,smokes
+19,Yes,Private,Urban,"formerly smoked"
+20,Yes,Govt_job,Urban,smokes
+21,Yes,Self-employed,Urban,"never smoked"
+22,Yes,Private,Rural,smokes
+23,Yes,Govt_job,Rural,smokes
+24,No,Private,Rural,"formerly smoked"
+25,Yes,Self-employed,Urban,"formerly smoked"
+26,No,Private,Rural,"never smoked"
+27,Yes,Self-employed,Rural,"formerly smoked"
+28,No,Govt_job,Rural,"never smoked"
+29,Yes,Govt_job,Rural,Unknown
+30,Yes,Govt_job,Urban,"never smoked"
+31,No,Self-employed,Urban,"never smoked"
+32,No,Private,Urban,smokes
+33,No,Govt_job,Urban,smokes
+34,Yes,Govt_job,Urban,"formerly smoked"
+35,Yes,Self-employed,Urban,smokes
+36,Yes,Self-employed,Urban,Unknown
+37,Yes,Govt_job,Rural,"formerly smoked"
+38,No,Govt_job,Urban,"never smoked"
+39,No,Self-employed,Rural,"formerly smoked"
+40,No,Govt_job,Rural,"formerly smoked"
+41,Yes,Self-employed,Rural,smokes
+42,No,Govt_job,Urban,Unknown
+43,No,Self-employed,Rural,Unknown
+44,No,Govt_job,Rural,smokes
+45,No,children,Rural,smokes
+46,No,Self-employed,Urban,"formerly smoked"
+47,No,Self-employed,Urban,Unknown
+48,No,children,Rural,"never smoked"
+49,No,children,Urban,"formerly smoked"
+50,No,Self-employed,Rural,smokes
+51,No,Govt_job,Rural,Unknown
+52,No,children,Urban,"never smoked"
+53,No,Never_worked,Urban,Unknown
+54,No,Never_worked,Urban,"never smoked"
+55,No,Govt_job,Urban,"formerly smoked"
+56,No,Never_worked,Rural,Unknown
+57,No,children,Rural,"formerly smoked"
+58,No,Self-employed,Urban,smokes
+59,No,Never_worked,Rural,"never smoked"
+60,No,children,Urban,smokes

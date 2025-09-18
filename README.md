@@ -33,7 +33,7 @@
 - **流程設計**：  
   `資料探索 → 預處理 → 建模 → 評估 → 模型選擇 → 模型解釋 → 外部驗證`
 - **輸出 Demo**：  
-  - GitHub Pages → [中風風險預測 Demo](https://dancingpandasa.github.io/Strokedata/)  
+  - GitHub Pages → [中風風險預測 Demo](https://dancingpandasa.github.io/Strokedata/SAPS.html)  
   - 使用者可輸入 **年齡、性別、BMI、血糖等個人資訊**，系統會計算 **中風風險機率**，並提供與 **台灣腦血管疾病死亡率 (MOHW)** 的趨勢比較。
 
 ---

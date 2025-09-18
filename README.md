@@ -62,8 +62,8 @@
 ## 📎 專案展示
 
 - Power BI 分析報表 → [點此查看](https://app.powerbi.com/view?r=eyJrIjoiYTE5NDgzMTYtMmRhZi00ZjhmLWFkYjktZjIwZTY4NzJkOTFhIiwidCI6ImM3ODIzYzk2LWFmNDgtNGJlNC05YmUxLWFhN2I2MDEyMTk5NyIsImMiOjZ9)  
-- 機器學習預測 Demo (GitHub Pages) → [點此進入](https://dancingpandasa.github.io/Strokedata/)
-- 專案簡報 Slide → [點此瀏覽](https://dancingpandasa.github.io/Strokedata/Slide.html)
+- 機器學習預測 Demo (GitHub Pages) → [點此進入](https://dancingpandasa.github.io/Strokedata/SAPS.html)
+- 專案簡報 Slide → [點此瀏覽](https://dancingpandasa.github.io/Strokedata/)
 ---
 
 

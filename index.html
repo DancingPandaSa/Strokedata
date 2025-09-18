@@ -1,785 +1,322 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>腦血管疾病風險預測與死亡率監控平台</title>
+  <title>腦中風資料分析專案簡報</title>
   <style>
-    :root{--bg:#f6f8fa;--card:#ffffff;--accent:#1f7fbf;--accent2:#2fb8a6;--muted:#6b7280;--danger:#e06a6a}
-    body{font-family: "Noto Sans","Microsoft JhengHei",Arial,sans-serif;background:var(--bg);margin:0;color:#0f1724}
-    .container{max-width:1200px;margin:24px auto;padding:18px;}
-    header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-    h1{margin:0;font-size:26px;color:var(--accent)}
-    .controls{display:flex;gap:12px;align-items:center}
-    .kpi{background:var(--card);padding:12px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start}
-    .card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,36,0.04)}
-    .form-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-    label{width:90px;font-size:14px;color:var(--muted)}
-    input[type=text], input[type=number], select{flex:1;padding:8px;border-radius:6px;border:1px solid #e6e9ee}
-    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
-    .gauge{display:flex;gap:18px;align-items:center}
-    .gauge .big{font-size:42px;font-weight:700}
-    .bars{margin-top:10px}
-    .bar{height:14px;border-radius:8px;background:#ecf3f8;margin:8px 0;overflow:hidden}
-    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));}
-    .trend svg{width:100%;height:200px}
-    footer{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
-    .note{font-size:13px;color:var(--muted)}
-    @media(max-width:920px){.grid{grid-template-columns:1fr}}
-     
-    /* 儀表盤樣式 - 放大 */
-    .gauge-container {
-      position: relative;
-      width: 320px;
-      height: 220px;
-      overflow: visible;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    :root{
+      --bg:#f8fafc;
+      --card:#fff;
+      --accent:#0ea5e9; /* 淺藍色，取代了青綠色 */
+      --muted:#64748b;
+      --text:#1e293b;
+      --border:#e2e8f0;
+      --shadow:rgba(100, 116, 139, 0.1); /* 淺色陰影 */
     }
-    .gauge-labels {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    html,body{height:100%;margin:0;font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    body{background:var(--bg); color:var(--text);}
+    .wrap{max-width:1100px;margin:30px auto;padding:20px;}
+    .slide{
+      background:var(--card);
+      border-radius:12px;
+      padding:36px;
+      box-shadow: 0 10px 30px var(--shadow);
+      min-height:520px;
+      position:relative;
+      border: 1px solid var(--border);
     }
-    .gauge-label {
-      position: absolute;
-      font-size: 10px;
-      color: var(--muted);
-      transform: translate(-50%, -50%);
+    h1,h2,h3{margin:6px 0;color:var(--text);font-weight:600;}
+    h1{font-size:2.5rem; color:#0f172a;}
+    h2{font-size:2rem; color:var(--accent);}
+    p{color:var(--muted);line-height:1.7;}
+    ul, ol{color:var(--muted); margin-left:1.1rem; line-height:1.7;}
+    .meta{font-size:0.9rem;color:var(--muted)}
+    .kbd{display:inline-block;background:#e2e8f0;padding:6px 10px;border-radius:6px;color:var(--accent);font-weight:600}
+    .controls{display:flex;gap:10px;position:fixed;left:50%;transform:translateX(-50%);bottom:20px}
+    .btn{
+      background:var(--card);
+      color:var(--accent);
+      padding:10px 18px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      cursor:pointer;
+      font-weight:600;
+      transition: all 0.2s ease-in-out;
     }
-     
-    /* BMI值樣式 - 增大字體 */
-    #bmiResult {
-      font-size: 18px;
-      font-weight: bold;
+    .btn:hover{
+      background:var(--accent);
+      color:#fff;
+      box-shadow: 0 4px 12px rgba(14,165,233,0.2);
     }
-     
-    /* 高風險提示文字居中 */
-    .risk-warning {
-      text-align: center;
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 6px;
-      width: 100%;
-    }
-    /* Dynamic KPI dashboard style */
-    .kpi-dashboard {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .kpi-board {
-        background: linear-gradient(135deg, #1f7fbf, #2fb8a6);
-        color: white;
-        padding: 12px 16px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        text-align: center;
-        min-width: 180px;
-        transition: all 0.3s ease-in-out;
-    }
-    .kpi-board-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-    .kpi-board-value {
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 1;
-    }
-    .kpi-board-year {
-        font-size: 14px;
-        margin-top: 4px;
-    }
-    .year-select-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
-    }
-    .year-select-container label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: -4px;
-    }
-    .year-select-container select {
-      background: var(--card);
-      border: 1px solid #e6e9ee;
-      padding: 6px 8px;
-      border-radius: 8px;
-    }
-    
-    /* 年齡層死亡率分佈圖表樣式 */
-    .age-distribution-chart {
-      margin-top: 20px;
-      padding: 15px;
-      background: #f9f9f9;
-      border-radius: 8px;
-    }
-    .chart-container {
-      width: 100%;
-      height: 400px;
-      position: relative;
-    }
-    .chart-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: var(--accent);
-    }
-    .chart-legend {
-      display: flex;
-      gap: 15px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-    }
-    .legend-color {
-      width: 15px;
-      height: 15px;
-      border-radius: 3px;
-    }
-    .axis-label {
-      font-size: 12px;
-      fill: var(--muted);
-    }
-    .axis-line {
-      stroke: #ddd;
-      stroke-width: 1;
-    }
-    .bar-group {
-      transition: opacity 0.3s;
-    }
-    .bar-group:hover {
-      opacity: 0.8;
-    }
-    .tooltip {
-      position: absolute;
-      padding: 8px;
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      border-radius: 4px;
-      font-size: 12px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    /* 性别分布样式 */
-    .gender-distribution {
-      margin-top: 20px;
-    }
-    .gender-bars {
-      display: flex;
-      height: 40px;
-      margin-top: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .male-bar {
-      background-color: #1f7fbf;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-    }
-    .female-bar {
-      background-color: #e06a6a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-    }
-    .gender-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 5px;
-      font-size: 12px;
-      color: var(--muted);
+    .small{font-size:0.9rem;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+    .card{background:var(--bg);padding:24px;border-radius:10px;border:1px solid var(--border);}
+    footer{position:absolute;right:24px;bottom:20px;color:var(--muted);font-size:12px}
+    pre {background:#f1f5f9;color:#0f172a; padding:18px;border-radius:8px;overflow:auto; line-height:1.6; border:1px solid var(--border);}
+    /* slide visibility */
+    .slide { display:none; }
+    .slide.active { display:block; animation: fadeIn .35s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none}}
+    /* responsive */
+    @media(max-width:900px){
+      .grid{grid-template-columns:1fr; }
+      .wrap{padding:12px;margin:12px}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div>
-        <h1>腦血管疾病風險預測與死亡率監控平台</h1>
-        <div class="note">資料來源：Kaggle Stroke Dataset（個人層級模擬） + MOHW 死因統計（群體層級）</div>
-      </div>
-      <div class="kpi-dashboard">
-        <div class="year-select-container">
-            <label for="year-select">選擇年度:</label>
-            <select id="year-select"></select>
+  <div class="wrap">
+    <section class="slide active" id="s-0">
+      <h1>腦中風資料分析專案</h1>
+      <p class="meta">專案說明 / 面試簡報 — 資料管線、建模、BI 與 AI</p>
+      <hr style="border:none;border-top:1px solid var(--border);margin:20px 0 24px;">
+      <p>本專案以 Kaggle 腦中風資料集為核心，模擬真實流程。我們從資料庫整合開始，運用 dbt 建立自動化清洗與轉換流程，接著建立資料倉儲。最終成果不僅包含 Power BI 儀表板，還有一套完整的機器學習模型，能有效預測中風風險並進行結果驗證。</p>
+      <div class="grid" style="margin-top:28px">
+        <div class="card">
+          <h3>核心目標</h3>
+          <ul>
+            <li>建構強韌的資料管線 (ETL / dbt)</li>
+            <li>設計星型資料模型，支援 BI 報表分析</li>
+            <li>訓練並解釋多種機器學習模型 (Logistic / RF / XGBoost)</li>
+            <li>利用台灣衛福部資料進行外部驗證</li>
+          </ul>
         </div>
-        <div class="kpi-board">
-            <div class="kpi-board-title" id="cause-rank-title">腦血管疾病死因排名</div>
-            <div class="kpi-board-value" id="cause-rank-value">--</div>
-            <div class="kpi-board-year" id="kpi-year">--</div>
+        <div class="card">
+          <h3>簡報大綱</h3>
+          <ol class="small">
+            <li>資料管線 & dbt 流程</li>
+            <li>資料建模 (星型模型)</li>
+            <li>Power BI 視覺化範例</li>
+            <li>AI/ML 建模與評估</li>
+            <li>外部驗證與專案總結</li>
+          </ol>
         </div>
       </div>
-    </header>
+      <footer>作者：Stella LIU ｜ 日期：2025-09-17</footer>
+    </section>
 
-    <!-- 個人風險預測 -->
-    <div class="grid">
+    <section class="slide" id="s-1">
+      <h2>1. 資料管線 (Data Pipeline)</h2>
+      <p>從原始資料到最終應用的完整路徑：Raw → Staging → Integration → Mart → DWH → BI/ML</p>
+      <div class="grid">
+        <div class="card">
+          <h3>資料來源</h3>
+          <ul>
+            <li>Kaggle: Stroke Prediction Dataset</li>
+            <li>台灣衛福部 (MOHW)：作為外部驗證資料</li>
+            <li>資料庫：MySQL (模擬臨床資料庫 <code>strokedata</code>)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>dbt 轉換流程</h3>
+          <ul>
+            <li><strong>stg_strokedata</strong>：資料清洗層，處理 "N/A"、標準化欄位型別。</li>
+            <li><strong>int_stroke_features</strong>：整合層，建立如 age_group, bmi_category 等衍生欄位。</li>
+            <li><strong>mart_stroke_analysis</strong>：彙總層，為 BI 報表預先計算 Age×BMI、Gender×Smoking 等分析指標。</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:20px" class="card">
+        <h3>資料倉儲架構</h3>
+        <p>所有處理後的資料表都集中存放於資料倉儲 (Data Warehouse)，以便 Power BI 和機器學習模型直接取用，確保資料的一致性和可信度。</p>
+      </div>
+      <footer>技術：MySQL / dbt / Python / Power BI</footer>
+    </section>
+
+    <section class="slide" id="s-2">
+      <h2>2. 資料建模 (Data Modeling)</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>星型模型 (Star Schema)</h3>
+          <p>我們採用星型模型來組織資料，讓分析更直覺、高效：</p>
+          <ul>
+            <li><strong>事實表 (Fact Table)</strong>：<code>fact_stroke_cases</code>，記錄每一個病患的觀測資料。</li>
+            <li><strong>維度表 (Dimension Tables)</strong>：<code>dim_patient</code>、<code>dim_health</code>、<code>dim_lifestyle</code>，提供不同角度的描述性資訊。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>維度表欄位範例</h3>
+          <ul>
+            <li><strong>dim_patient</strong>：patient_key, gender, age, age_group</li>
+            <li><strong>dim_health</strong>：health_key, hypertension, heart_disease, bmi, bmi_category</li>
+            <li><strong>dim_lifestyle</strong>：lifestyle_key, ever_married, work_type, residence_type, smoking_status</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:20px" class="card">
+        <h3>設計優勢</h3>
+        <p>這種設計能讓你在 BI 工具中輕鬆地進行多維度切片 (slice & dice) 分析，同時保持資料的一致性，並將複雜的查詢轉換為簡單的 Join 操作，大幅提升報表效能。</p>
+      </div>
+      <footer>輸出：事實表 + 維度表 → BI/ML 應用</footer>
+    </section>
+
+    <section class="slide" id="s-3">
+      <h2>3. Mart 層與彙總表</h2>
       <div class="card">
-        <h3>個人風險預測</h3>
-        <p class="note">輸入病人特徵，按「計算風險」會用示範模型計算分數（0–100）。</p>
-
-        <div style="margin-top:8px">
-          <div class="form-row"><label>年齡</label><input id="age" type="number" value="65" min="0" max="120" /></div>
-          <div class="form-row"><label>性別</label>
-            <select id="gender"><option value="male">男</option><option value="female">女</option></select>
-          </div>
-          <div class="form-row"><label>高血壓</label><select id="htn"><option value="0">否</option><option value="1">是</option></select></div>
-          <div class="form-row"><label>心臟病</label><select id="hd"><option value="0">否</option><option value="1">是</option></select></div>
-          <div class="form-row"><label>平均血糖</label><input id="glucose" type="number" value="110" /></div>
-          <div class="form-row"><label>身高 (cm)</label><input id="heightCm" type="number" value="170" step="1" /></div>
-          <div class="form-row"><label>體重 (kg)</label><input id="weightKg" type="number" value="75" step="0.1" /></div>
-          <div class="form-row"><label>吸菸狀態</label>
-            <select id="smoke_status"><option value="0">從未吸菸</option><option value="0.5">曾吸菸</option><option value="1">吸菸中</option></select>
-          </div>
-          <div style="margin-top:12px"><button class="btn" onclick="computeRisk()">計算風險</button></div>
-        </div>
-
-        <hr style="margin:14px 0" />
-         
-        <div class="form-row" style="margin-bottom:14px; font-weight:600; font-size:14px">
-            <label>BMI 數值</label>
-            <span id="bmiResult" style="color:var(--accent); flex:1">--</span>
-        </div>
-
-        <div class="gauge">
-          <div>
-            <div class="big" id="riskText">-- %</div>
-            <div class="note">估計中風風險</div>
-          </div>
-          <div style="flex:1; display: flex; flex-direction: column; align-items: center;">
-            <div class="gauge-container">
-              <svg id="gaugeSvg" width="320" height="220" viewBox="0 0 320 220"></svg>
-              <div class="gauge-labels" id="gaugeLabels"></div>
-            </div>
-            <div class="risk-warning">高風險提示：紅色區域</div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px">
-          <div class="bars">
-            <div style="display:flex;justify-content:space-between"><div class="note">重要影響因子</div><div class="note" id="topFactorsVal">-</div></div>
-            <div class="bar"><i id="barAge" style="width:0%"></i></div>
-            <div class="bar"><i id="barHtn" style="width:0%"></i></div>
-            <div class="bar"><i id="barGlucose" style="width:0%"></i></div>
-          </div>
-        </div>
-
-        <div id="riskExplain" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--muted)">請輸入資料並計算風險。</div>
+        <p>Mart 層是預先彙總的資料集，專為特定分析場景設計，例如 <code>mart_age_x_bmi</code> 和 <code>mart_gender_x_smoking</code>。它的主要好處是：</p>
+        <ul>
+          <li><strong>提升報表速度</strong>：Power BI 可直接讀取彙總表，省去即時計算的負擔。</li>
+          <li><strong>簡化分析流程</strong>：直接提供業務或臨床人員所需的資料，無須自行處理複雜的 SQL 查詢。</li>
+          <li><strong>支援多種應用</strong>：彙總表不僅能用於 BI，也能作為機器學習的特徵工程來源。</li>
+        </ul>
       </div>
-
-      <!-- 公共衛生趨勢 -->
-      <div class="card">
-        <h3>公共衛生趨勢（MOHW 範例資料）</h3>
-        <p class="note" id="trend-note">下圖為腦血管疾病死亡率（每十萬人口）及年齡層分佈示範。</p>
-        <div class="trend"><svg id="trendSvg" viewBox="0 0 500 200" preserveAspectRatio="none"></svg></div>
-        
-        <!-- 性别分布图表 -->
-        <div class="gender-distribution">
-          <div style="font-size:13px;color:var(--muted)">性别死亡率分布 (<span id="gender-dist-year">2023</span>)</div>
-          <div class="gender-bars" id="gender-bars">
-            <div class="male-bar" id="male-bar" style="width:50%">男性: 50%</div>
-            <div class="female-bar" id="female-bar" style="width:50%">女性: 50%</div>
-          </div>
-          <div class="gender-labels">
-            <span id="male-label">男性: --</span>
-            <span id="female-label">女性: --</span>
-          </div>
+      <div class="grid" style="margin-top:20px">
+        <div class="card">
+          <h3>範例：mart_age_x_bmi</h3>
+          <p>欄位：age_group, bmi_category, total_count, stroke_count, stroke_rate</p>
         </div>
-        
-        <div style="margin-top:10px">
-          <div style="font-size:13px;color:var(--muted)">年齡層死亡率分佈 (<span id="age-dist-year">2023</span>)</div>
-          <div style="display:flex;gap:8px;margin-top:6px">
-            <div style="flex:1;background:#ecf8f4;border-radius:8px;padding:8px">
-              <div style="height:28px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;border-radius:6px;margin-bottom:6px" id="age-bar-1"></div>
-              <div style="height:28px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;border-radius:6px;margin-bottom:6px" id="age-bar-2"></div>
-              <div style="height:28px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;border-radius:6px;margin-bottom:6px" id="age-bar-3"></div>
-              <div style="height:28px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;border-radius:6px;margin-bottom:6px" id="age-bar-4"></div>
-              <div style="height:28px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;border-radius:6px" id="age-bar-5"></div>
-            </div>
-            <div style="width:100px; display:flex; flex-direction: column; justify-content:space-between;">
-              <div style="font-size:13px" id="age-label-1">--</div>
-              <div style="font-size:13px" id="age-label-2">--</div>
-              <div style="font-size:13px" id="age-label-3">--</div>
-              <div style="font-size:13px" id="age-label-4">--</div>
-              <div style="font-size:13px" id="age-label-5">--</div>
-            </div>
-          </div>
+        <div class="card">
+          <h3>範例：mart_gender_x_smoking</h3>
+          <p>欄位：gender, smoking_status, total_count, stroke_count, stroke_rate</p>
         </div>
       </div>
-    </div>
+      <footer>好處：快速、簡潔、可供 BI 直接讀取</footer>
+    </section>
 
-    <!-- 整合分析 -->
-    <div class="card" style="margin-top:18px">
-      <h3>整合分析</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
-        <div style="flex:1;min-width:280px">
-          <svg id="featureSvg" viewBox="0 0 500 200" preserveAspectRatio="none"></svg>
+    <section class="slide" id="s-4">
+      <h2>4. Power BI 可視化範例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>關鍵績效指標 (KPI)</h3>
+          <ul>
+            <li>總樣本數、中風總數、中風率、平均年齡、平均 BMI。</li>
+            <li>透過直觀的 KPI 卡片，快速掌握核心數據。</li>
+          </ul>
         </div>
-        <div style="flex:1;min-width:260px;background:#f0fafc;padding:12px;border-radius:8px">
-          <p class="note"><b>核心洞見：</b>模型與 MOHW 統計一致顯示：年齡與高血壓是腦血管疾病的主要風險因子。建議醫院針對高齡與慢性病患者加強篩檢與衛教，降低中風發生率。</p>
+        <div class="card">
+          <h3>核心視覺化圖表</h3>
+          <ul>
+            <li><strong>熱力圖</strong>：年齡組 × BMI 的中風率分布。</li>
+            <li><strong>分組柱狀圖</strong>：比較不同性別與吸菸狀態的中風比例。</li>
+            <li><strong>條形圖</strong>：分析不同職業類型與中風的關聯性。</li>
+          </ul>
         </div>
       </div>
-    </div>
-
-    <footer>
-      <div class="card" style="flex:1">
-        <strong>About / 使用說明</strong>
-        <p class="note">此 HTML 為完整 Demo：前端互動為模擬計算，並非臨床模型。若要實際應用，請串接後端 API 與真實授權資料。</p>
+      <div style="margin-top:20px" class="card">
+        <h3>互動式分析</h3>
+        <p>儀表板上設計了多種篩選器 (slicers)，讓使用者可以根據性別、年齡組、吸菸狀態等條件，即時切換和過濾所有圖表，進行深度探索性分析。</p>
       </div>
-    </footer>
+    </section>
+
+    <section class="slide" id="s-5">
+      <h2>5. AI / 機器學習流程</h2>
+      <p>我們的建模過程嚴謹且完整，確保模型的可靠性：</p>
+      <ol>
+        <li><strong>資料探索</strong>：詳細檢查數據分布、缺失值和異常值。</li>
+        <li><strong>特徵工程</strong>：處理缺失值、類別編碼、數值標準化。</li>
+        <li><strong>模型訓練</strong>：採用多種模型（邏輯迴歸、隨機森林、XGBoost）進行比對。</li>
+        <li><strong>模型評估</strong>：使用 Accuracy, Precision, Recall, F1, ROC-AUC 等指標全面評估。</li>
+        <li><strong>模型選擇</strong>：綜合考量指標與業務需求，最終選定解釋性最強的邏輯迴歸。</li>
+        <li><strong>模型解釋</strong>：分析各特徵的重要性，例如 SHAP values。</li>
+        <li><strong>外部驗證</strong>：利用台灣衛福部的公開數據，驗證模型在不同資料集上的穩定性。</li>
+      </ol>
+      <div style="margin-top:20px" class="card">
+        <h3>邏輯迴歸的解釋性</h3>
+        <p>邏輯迴歸模型的每個係數 (β) 都可以被解釋為特徵對中風機率的影響倍數 (Odds Ratio)，這對於臨床應用特別有價值。</p>
+      </div>
+    </section>
+
+    <section class="slide" id="s-6">
+      <h2>6. 模型訓練與結果</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>模型表現</h3>
+          <ul>
+            <li><strong>邏輯迴歸 (Logistic Regression)</strong>：表現最佳，ROC-AUC 約 0.83，特別擅長找出高風險個案。</li>
+            <li><strong>隨機森林 (Random Forest) & XGBoost</strong>：雖然整體準確率高，但對於中風（少數類別）的預測敏感度較差。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>指標觀察</h3>
+          <ul>
+            <li><strong>邏輯迴歸</strong>：Recall 值高，能有效篩出大多數中風個案，但 Precision 略低（會有一些誤報）。</li>
+            <li><strong>RF/XGB</strong>：Accuracy 值高，但對少數類 (中風) 的 Recall 值較低。</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:20px" class="card">
+        <h3>特徵重要性分析</h3>
+        <p>分析顯示，幾個關鍵因子對中風風險影響最顯著：<br><strong>平均血糖 (avg_glucose_level)、BMI、年齡 (age)、吸菸狀態 (smoking_status)、高血壓 (hypertension) 與心臟病 (heart_disease)。</strong></p>
+      </div>
+    </section>
+
+    <section class="slide" id="s-7">
+      <h2>7. 外部驗證 (MOHW 台灣資料)</h2>
+      <p>我們將模型應用於台灣衛福部的腦血管疾病相關數據，進行外部驗證：</p>
+      <ul>
+        <li><strong>比對群體分布</strong>：檢查模型預測的風險分布是否與台灣實際統計資料相符。</li>
+        <li><strong>評估模型穩定性</strong>：計算模型在台灣資料集上的 ROC-AUC 和校準度 (calibration)。</li>
+        <li><strong>策略調整</strong>：若驗證結果不佳，可評估是否需要對模型進行領域適應 (domain adaptation) 或重新訓練。</li>
+      </ul>
+      <div class="card" style="margin-top:20px">
+        <h3>驗證步驟</h3>
+        <ol>
+          <li><strong>資料對齊</strong>：將 MOHW 資料的欄位、分組與模型輸入格式對齊。</li>
+          <li><strong>模型推論</strong>：將 MOHW 資料輸入模型，計算每個個體的預測中風機率。</li>
+          <li><strong>效果評估</strong>：利用 ROC 曲線、校準曲線等工具來評估模型的實際表現。</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide" id="s-8">
+      <h2>8. 線上風險計算器 (Demo 構想)</h2>
+      <p>這是一個基於邏輯迴歸模型的應用構想：</p>
+      <pre>
+z = β0 + β1*age + β2*bmi + β3*hypertension + ...
+P = 1 / (1 + exp(-z))
+      </pre>
+      <p>可以將此模型部署為一個輕量級的網頁應用程式 (例如使用 Flask 或純前端 JS)，讓使用者即時計算中風風險：</p>
+      <ul>
+        <li><strong>使用者輸入</strong>：年齡、BMI、高血壓、心臟病、吸菸狀態、性別。</li>
+        <li><strong>系統輸出</strong>：即時顯示中風機率 (百分比)、風險等級（低/中/高）與相關建議。</li>
+      </ul>
+    </section>
+
+    <section class="slide" id="s-9">
+      <h2>9. 結論與未來展望</h2>
+      <ul>
+        <li><strong>專案成果</strong>：我們成功建置了從資料管線、倉儲到 BI 報表與 AI 模型的完整流程。</li>
+        <li><strong>核心發現</strong>：星型模型有效地支援了多維度分析，而邏輯迴歸模型因其優異的解釋性，最適合本次的應用情境。</li>
+        <li><strong>未來工作</strong>：下一步將強化外部驗證流程，並嘗試將模型部署為線上工具，同時探索更進階的時間序列分析，以期能預測中風趨勢。</li>
+      </ul>
+      <div style="margin-top:20px" class="card">
+        <h3>Q&A</h3>
+        <p>感謝您的時間！</p>
+      </div>
+    </section>
   </div>
 
-  <!-- 工具提示 -->
-  <div class="tooltip" id="tooltip"></div>
+  <div class="controls">
+    <button class="btn" id="prev">◀ 上一頁</button>
+    <div style="min-width:20px"></div>
+    <button class="btn" id="next">下一頁 ▶</button>
+  </div>
 
-<script>
-  // 使用提供的Excel数据
-  const causeData = [
-    { year: 2018, '腦血管疾病': 11540 },
-    { year: 2019, '腦血管疾病': 11237 },
-    { year: 2020, '腦血管疾病': 10967 },
-    { year: 2021, '腦血管疾病': 11713 },
-    { year: 2022, '腦血管疾病': 11970 },
-    { year: 2023, '腦血管疾病': 12371 },
-    { year: 2024, '腦血管疾病': 12463 }
-  ];
-
-  const populationData = [
-    { year: 2018, population: 23403073 },
-    { year: 2019, population: 23426637 },
-    { year: 2020, population: 23419423 },
-    { year: 2021, population: 23314966 },
-    { year: 2022, population: 23179516 },
-    { year: 2023, population: 23211595 },
-    { year: 2024, population: 23279445 }
-  ];
-
-  // 性别分布数据
-  const genderData = [
-    { year: 2015, male: 115289, female: 111421 },
-    { year: 2016, male: 126459, female: 118861 },
-    { year: 2017, male: 128724, female: 122395 },
-    { year: 2018, male: 130705, female: 125565 },
-    { year: 2019, male: 135090, female: 129816 },
-    { year: 2020, male: 137590, female: 132238 },
-    { year: 2021, male: 134493, female: 133280 },
-    { year: 2022, male: 148144, female: 138889 },
-    { year: 2023, male: 150211, female: 140284 },
-    { year: 2024, male: 152369, female: 143755 }
-  ];
-
-  // 年龄分布数据
-  const ageData = [
-    { year: 2015, '1-14': 92, '15-24': 282, '25-44': 12875, '45-64': 67849, '65+': 125739 },
-    { year: 2016, '1-14': 138, '15-24': 294, '25-44': 12510, '45-64': 71036, '65+': 141372 },
-    { year: 2017, '1-14': 104, '15-24': 259, '25-44': 11505, '45-64': 71198, '65+': 148034 },
-    { year: 2018, '1-14': 99, '15-24': 118, '25-44': 11603, '45-64': 70333, '65+': 152264 },
-    { year: 2019, '1-14': 27, '15-24': 313, '25-44': 12996, '45-64': 72971, '65+': 169809 },
-    { year: 2020, '1-14': 115, '15-24': 220, '25-44': 10996, '45-64': 73370, '65+': 172120 },
-    { year: 2021, '1-14': 56, '15-24': 154, '25-44': 10921, '45-64': 70589, '65+': 170681 },
-    { year: 2022, '1-14': 82, '15-24': 116, '25-44': 10311, '45-64': 70820, '65+': 200822 },
-    { year: 2023, '1-14': 39, '15-24': 96, '25-44': 10812, '45-64': 76762, '65+': 204831 },
-    { year: 2024, '1-14': 119, '15-24': 163, '25-44': 9030, '45-64': 77492, '65+': 218151 }
-  ];
-
-  // 脑脑血管疾病死因排名数据
-  const strokeRankingData = [
-    { year: 2018, rank: 4, total_causes: 11520 },
-    { year: 2019, rank: 4, total_causes: 12176 },
-    { year: 2020, rank: 4, total_causes: 11821 },
-    { year: 2021, rank: 4, total_causes: 12182 },
-    { year: 2022, rank: 5, total_causes: 12416 },
-    { year: 2023, rank: 4, total_causes: 12371 },
-    { year: 2024, rank: 4, total_causes: 12463 }
-  ];
-
-  const yearSelect = document.getElementById('year-select');
-  const causeRankValue = document.getElementById('cause-rank-value');
-  const kpiYear = document.getElementById('kpi-year');
-  const ageDistYear = document.getElementById('age-dist-year');
-  const genderDistYear = document.getElementById('gender-dist-year');
-  const tooltip = document.getElementById('tooltip');
-
-  /**
-   * Updates the KPI board with the stroke ranking for the selected year.
-   * @param {number} year The year to display.
-   */
-  function updateKpiDashboard(year) {
-    const yearData = strokeRankingData.find(item => item.year === parseInt(year, 10));
-    const causeDataForYear = causeData.find(item => item.year === parseInt(year, 10));
-
-    if (!yearData || !causeDataForYear) {
-      console.error(`No data found for the year: ${year}`);
-      causeRankValue.textContent = '--';
-      kpiYear.textContent = '--';
-      return;
+  <script>
+    // simple slide controller
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0;
+    function show(i){
+      slides.forEach(s=>s.classList.remove('active'));
+      slides[i].classList.add('active');
+      idx = i;
+      window.scrollTo(0,0);
     }
-
-    causeRankValue.textContent = `第${yearData.rank}位 (${causeDataForYear['腦血管疾病'].toLocaleString()}人)`;
-    kpiYear.textContent = year;
-  }
-
-  function computeRisk(){
-    // 取得使用者輸入值
-    const age = Number(document.getElementById('age').value) || 0;
-    const htn = Number(document.getElementById('htn').value);
-    const hd = Number(document.getElementById('hd').value);
-    const glucose = Number(document.getElementById('glucose').value) || 100;
-    const heightCm = Number(document.getElementById('heightCm').value) || 170;
-    const weightKg = Number(document.getElementById('weightKg').value) || 75;
-    const smoking_status = Number(document.getElementById('smoke_status').value);
-
-    // 新增：根據身高體重計算 BMI
-    let bmi = 0;
-    if (heightCm > 0) {
-      const heightM = heightCm / 100;
-      bmi = weightKg / (heightM * heightM);
-    }
-    // 將計算出的 BMI 顯示在頁面上
-    document.getElementById('bmiResult').innerText = bmi.toFixed(1);
-     
-    // 根據你的 Logistic Regression 模型結果，調整風險計算權重
-    // 這是前端模擬，非實際模型推論，權重僅供參考以符合你的分析結果
-    let score = 0;
-    let age_factor = age * 0.38; // 年齡是重要因子，賦予較大權重
-    let htn_factor = htn * 20;   // 高血壓是重要因子，賦予較大權重
-    let hd_factor = hd * 10;     // 心臟病有一定影響
-    let glucose_factor = Math.max(0,(glucose-90)) * 0.12; // 高血糖有影響，90以上才算
-    let bmi_factor = Math.max(0,(bmi-25)) * 0.5; // BMI超過25才開始影響
-    let smoke_factor = smoking_status * 12; // 吸菸狀態有影響
-
-    // 總分計算與正規化
-    score = age_factor + htn_factor + hd_factor + glucose_factor + bmi_factor + smoke_factor;
-    score = Math.round(Math.max(0, Math.min(100, score)));
-    document.getElementById('riskText').innerText = score + " %";
-    drawGauge(score);
-
-    // 計算各個因子的貢獻比例，用於繪製下方的條形圖
-    const total_factors_sum = Math.max(1, age_factor + htn_factor + glucose_factor);
-    const age_con = Math.min(100, Math.round((age_factor/total_factors_sum)*100));
-    const htn_con = Math.min(100, Math.round((htn_factor/total_factors_sum)*100));
-    const glu_con = Math.min(100, Math.round((glucose_factor/total_factors_sum)*100));
-
-    document.getElementById('barAge').style.width = age_con + "%";
-    document.getElementById('barHtn').style.width = htn_con + "%";
-    document.getElementById('barGlucose').style.width = glu_con + "%";
-
-    const topFactors = [];
-    if(age_con>0) topFactors.push("年齡");
-    if(htn_con>0) topFactors.push("高血壓");
-    if(glu_con>0) topFactors.push("血糖");
-    document.getElementById('topFactorsVal').innerText = topFactors.join(", ");
-
-    const explain = document.getElementById("riskExplain");
-    if(score>=70){explain.innerText="⚠️ 高風險，建議立即尋求專業醫療諮詢與管理。";explain.style.color="var(--danger)";}
-    else if(score>=40){explain.innerText="⚠️ 中等風險，需加強健康追蹤與生活習慣改善。";explain.style.color="#d97706";}
-    else {explain.innerText="✅ 低風險，建議維持健康生活方式並定期檢查。";explain.style.color="green";}
-  }
-
-  // 完全重写仪表盘绘制函数
-  function drawGauge(value){
-    const svg = document.getElementById('gaugeSvg');
-    const labelsContainer = document.getElementById('gaugeLabels');
-     
-    // 清空 SVG 和標籤容器
-    while(svg.firstChild) svg.removeChild(svg.firstChild);
-    while(labelsContainer.firstChild) labelsContainer.removeChild(labelsContainer.firstChild);
-     
-    // 設置參數 - 更新為新的尺寸
-    const width = 320;
-    const height = 220;
-    const cx = width / 2;
-    const cy = height - 20; // 降低圓心位置
-    const radius = 85; // 增加半徑以適應新布局
-    const startAngle = Math.PI; // 從左側開始 (180度)
-    const endAngle = 0; // 到右側結束 (0度)
-     
-    // 繪製圓弧背景
-    function createArc(startAngle, endAngle, color, width) {
-      const start = polarToCartesian(cx, cy, radius, startAngle);
-      const end = polarToCartesian(cx, cy, radius, endAngle);
-       
-      const largeArcFlag = endAngle <= Math.PI ? 0 : 1;
-       
-      const d = [
-        "M", start.x, start.y,
-        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
-      ].join(" ");
-       
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", d);
-      path.setAttribute("fill", "none");
-      path.setAttribute("stroke", color);
-      path.setAttribute("stroke-width", width);
-      path.setAttribute("stroke-linecap", "round");
-      return path;
-    }
-     
-    // 极座標轉換為笛卡爾座標
-    function polarToCartesian(centerX, centerY, radius, angle) {
-      return {
-        x: centerX + (radius * Math.cos(angle)),
-        y: centerY + (radius * Math.sin(angle))
-      };
-    }
-     
-    // 繪製三個風險區域的圓弧
-    const lowRiskArc = createArc(startAngle, startAngle + (Math.PI * 0.7), "#88e1c7", 16);
-    const mediumRiskArc = createArc(startAngle + (Math.PI * 0.7), startAngle + (Math.PI * 0.9), "#ffd78a", 16);
-    const highRiskArc = createArc(startAngle + (Math.PI * 0.9), endAngle, "#f08a8a", 16);
-     
-    svg.appendChild(lowRiskArc);
-    svg.appendChild(mediumRiskArc);
-    svg.appendChild(highRiskArc);
-     
-    // 繪製刻度標記
-    for (let i = 0; i <= 10; i++) {
-      const angle = startAngle + (i / 10) * Math.PI;
-      const x1 = cx + (radius - 6) * Math.cos(angle);
-      const y1 = cy + (radius - 6) * Math.sin(angle);
-      const x2 = cx + (radius + 6) * Math.cos(angle);
-      const y2 = cy + (radius + 6) * Math.sin(angle);
-       
-      const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      tick.setAttribute("x1", x1);
-      tick.setAttribute("y1", y1);
-      tick.setAttribute("x2", x2);
-      tick.setAttribute("y2", y2);
-      tick.setAttribute("stroke", "#0f1724");
-      tick.setAttribute("stroke-width", i % 5 === 0 ? 2 : 1);
-      svg.appendChild(tick);
-       
-      // 每20個單位添加一個標籤
-      if (i % 2 === 0) {
-        const labelValue = i * 10;
-        const labelRadius = radius + 25; // 標籤位置稍微遠離圓弧
-        const labelX = cx + labelRadius * Math.cos(angle);
-        const labelY = cy + labelRadius * Math.sin(angle);
-         
-        const label = document.createElement("div");
-        label.className = "gauge-label";
-        label.textContent = labelValue;
-        label.style.left = `${labelX}px`;
-        label.style.top = `${labelY}px`;
-        labelsContainer.appendChild(label);
-      }
-    }
-     
-    // 繪製指針
-    const pointerAngle = startAngle + (value / 100) * Math.PI;
-    const pointerLength = radius - 18;
-    const nx = cx + pointerLength * Math.cos(pointerAngle);
-    const ny = cy + pointerLength * Math.sin(pointerAngle);
-     
-    const pointer = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    pointer.setAttribute("x1", cx);
-    pointer.setAttribute("y1", cy);
-    pointer.setAttribute("x2", nx);
-    pointer.setAttribute("y2", ny);
-    pointer.setAttribute("stroke", "#0f1724");
-    pointer.setAttribute("stroke-width", "3");
-    pointer.setAttribute("stroke-linecap", "round");
-    svg.appendChild(pointer);
-     
-    // 繪製中心圓
-    const centerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    centerCircle.setAttribute("cx", cx);
-    centerCircle.setAttribute("cy", cy);
-    centerCircle.setAttribute("r", "10");
-    centerCircle.setAttribute("fill", "#0f1724");
-    svg.appendChild(centerCircle);
-     
-    const centerCircleInner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    centerCircleInner.setAttribute("cx", cx);
-    centerCircleInner.setAttribute("cy", cy);
-    centerCircleInner.setAttribute("r", "6");
-    centerCircleInner.setAttribute("fill", "white");
-    svg.appendChild(centerCircleInner);
-  }
-
-  // 更新趨勢圖
-  function drawTrend() {
-    const deathsData = {};
-    causeData.forEach(item => {
-      deathsData[item.year] = item['腦血管疾病'];
+    document.getElementById('prev').addEventListener('click', ()=>{
+      show((idx - 1 + slides.length) % slides.length);
     });
-    
-    const populationDataObj = {};
-    populationData.forEach(item => {
-      populationDataObj[item.year] = item.population;
+    document.getElementById('next').addEventListener('click', ()=>{
+      show((idx + 1) % slides.length);
     });
-
-    const years = Object.keys(deathsData).map(Number).sort((a,b) => a-b);
-    const data = years.map(year => {
-        if (populationDataObj[year] > 0) {
-            return (deathsData[year] / populationDataObj[year]) * 100000;
-        }
-        return 0;
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'ArrowRight') show((idx + 1) % slides.length);
+      if(e.key === 'ArrowLeft') show((idx - 1 + slides.length) % slides.length);
+      if(e.key === 'Home') show(0);
+      if(e.key === 'End') show(slides.length -1);
     });
-
-    const svg = document.getElementById('trendSvg');
-    while(svg.firstChild) svg.removeChild(svg.firstChild);
-    const w = 500, h = 200, p = 24;
-    const min = Math.min(...data), max = Math.max(...data);
-    const scaleX = (w - 2 * p) / (data.length - 1);
-    const scaleY = (h - 2 * p) / (max - min);
-
-    let pts = "";
-    data.forEach((v, i) => {
-        const x = p + i * scaleX;
-        const y = p + (max - v) * scaleY;
-        pts += x + "," + y + " ";
-        svg.innerHTML += `<circle cx="${x}" cy="${y}" r="3" fill="${'var(--accent)'}"/>`;
-        svg.innerHTML += `<text x="${x}" y="${y - 8}" font-size="10" text-anchor="middle" fill="var(--accent)">${v.toFixed(1)}</text>`;
-    });
-
-    svg.innerHTML += `<polyline points="${pts}" fill="none" stroke="${'var(--accent)'}" stroke-width="2"/>`;
-
-    years.forEach((yr, i) => {
-        const x = p + i * scaleX;
-        svg.innerHTML += `<text x="${x}" y="${h - 6}" font-size="10" text-anchor="middle" fill="var(--muted)">${yr}</text>`;
-    });
-  }
-
-  // 更新性别分布
-  function updateGenderDistribution(year) {
-    const yearData = genderData.find(item => item.year === parseInt(year, 10));
-    
-    if (!yearData) {
-      console.error(`No gender data found for the year: ${year}`);
-      return;
-    }
-    
-    const total = yearData.male + yearData.female;
-    const malePercentage = Math.round((yearData.male / total) * 100);
-    const femalePercentage = 100 - malePercentage;
-    
-    document.getElementById('male-bar').style.width = `${malePercentage}%`;
-    document.getElementById('female-bar').style.width = `${femalePercentage}%`;
-    document.getElementById('male-bar').textContent = `男性: ${malePercentage}%`;
-    document.getElementById('female-bar').textContent = `女性: ${femalePercentage}%`;
-    document.getElementById('male-label').textContent = `男性: ${yearData.male.toLocaleString()}人`;
-    document.getElementById('female-label').textContent = `女性: ${yearData.female.toLocaleString()}人`;
-    genderDistYear.textContent = year;
-  }
-
-  // 更新年齡層死亡率分佈
-  function updateAgeDistribution(year) {
-    const yearData = ageData.find(item => item.year === parseInt(year, 10));
-    
-    if (!yearData) {
-      console.error(`No age data found for the year: ${year}`);
-      return;
-    }
-    
-    const totalDeaths = yearData['1-14'] + yearData['15-24'] + yearData['25-44'] + yearData['45-64'] + yearData['65+'];
-    
-    const percentage1to14 = (yearData['1-14'] / totalDeaths) * 100;
-    const percentage15to24 = (yearData['15-24'] / totalDeaths) * 100;
-    const percentage25to44 = (yearData['25-44'] / totalDeaths) * 100;
-    const percentage45to64 = (yearData['45-64'] / totalDeaths) * 100;
-    const percentage65plus = (yearData['65+'] / totalDeaths) * 100;
-    
-    document.getElementById('age-bar-1').style.width = percentage1to14 + '%';
-    document.getElementById('age-bar-2').style.width = percentage15to24 + '%';
-    document.getElementById('age-bar-3').style.width = percentage25to44 + '%';
-    document.getElementById('age-bar-4').style.width = percentage45to64 + '%';
-    document.getElementById('age-bar-5').style.width = percentage65plus + '%';
-    
-    document.getElementById('age-label-1').innerText = `1-14 (${yearData['1-14']}人)`;
-    document.getElementById('age-label-2').innerText = `15-24 (${yearData['15-24']}人)`; 
-    document.getElementById('age-label-3').innerText = `25-44 (${yearData['25-44']}人)`;
-    document.getElementById('age-label-4').innerText = `45-64 (${yearData['45-64']}人)`;
-    document.getElementById('age-label-5').innerText = `≥65 (${yearData['65+']}人)`;
-    ageDistYear.textContent = year;
-  }
-
-  // 修正 SVG 繪製函式，確保語法正確
-  function drawFeature(){
-    // 這部分根據你SHAP分析的結果來設定
-    const labels=["年齡","高血壓","血糖","吸菸狀態"];
-    // 數值為模擬的特徵重要性分數（0-100）
-    const model=[95,85,60,35]; 
-    // MOHW的數值為腦血管疾病在各群體中的死亡率相對高低（0-100）
-    const mohw=[98,88,65,40];
-     
-    const svg=document.getElementById('featureSvg');
-    while(svg.firstChild)svg.removeChild(svg.firstChild);
-    const w=500,h=200,p=40,max=100,barH=18;
-
-    // 圖例
-    svg.innerHTML += `<rect x="80" y="8" width="10" height="10" fill="var(--accent)"/>`
-    svg.innerHTML += `<text x="95" y="16" font-size="12" fill="var(--muted)">模型預測重要性</text>`
-    svg.innerHTML += `<rect x="200" y="8" width="10" height="10" fill="var(--accent2)"/>`
-    svg.innerHTML += `<text x="215" y="16" font-size="12" fill="var(--muted)">MOHW 統計趨勢</text>`
-
-    labels.forEach((lb,i)=>{
-      const y=p+i*(barH+16);
-      svg.innerHTML+=`<text x="0" y="${y+14}" font-size="12" fill="var(--muted)">${lb}</text>`;
-      const mW=(model[i]/max)*(w-150),moW=(mohw[i]/max)*(w-150);
-      svg.innerHTML+=`<rect x="80" y="${y}" width="${mW}" height="${barH}" fill="var(--accent)" rx="4"/>`;
-      svg.innerHTML+=`<rect x="80" y="${y+barH+4}" width="${moW}" height="${barH}" fill="var(--accent2)" rx="4"/>`;
-    });
-  }
-
-  /**
-   * Main initialization function.
-   * Populates the year dropdown and sets up initial view.
-   */
-  function initialize() {
-      const years = causeData.map(item => item.year).sort((a, b) => b - a);
-      years.forEach(year => {
-          const option = document.createElement('option');
-          option.value = year;
-          option.textContent = year;
-          yearSelect.appendChild(option);
-      });
-
-      // Set default year to 2023
-      yearSelect.value = '2023';
-
-      // Initial display
-      updateDashboard('2023');
-
-      // Add event listener for year change
-      yearSelect.addEventListener('change', (e) => {
-          updateDashboard(e.target.value);
-      });
-  }
-
-  /**
-   * Updates all dynamic parts of the dashboard based on the selected year.
-   * @param {number} year The year to display.
-   */
-  function updateDashboard(year) {
-      updateKpiDashboard(year);
-      drawTrend();
-      updateGenderDistribution(year);
-      updateAgeDistribution(year);
-      drawFeature();
-      computeRisk(); // Ensure personal risk calculation runs on load
-  }
-
-  window.onload = initialize;
-</script>
+    // initial
+    show(0);
+  </script>
 </body>
 </html>
